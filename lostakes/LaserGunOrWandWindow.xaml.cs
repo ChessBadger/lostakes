@@ -4,6 +4,9 @@ namespace lostakes
 {
     public partial class LaserGunOrWandWindow : Window
     {
+
+        public LaserGunOrWandData LaserGunOrWandData { get; private set; }
+
         public LaserGunOrWandWindow()
         {
             InitializeComponent();
@@ -51,7 +54,15 @@ namespace lostakes
         // OK button handler
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
-            // Add any logic for what should happen when OK is clicked
+
+            LaserGunOrWandData = new LaserGunOrWandData
+            {
+                Wand = WandCheckbox.IsChecked == true,
+                Reverse = ReversePolarityCheckbox.IsChecked == true,
+                Standard = StandardPolarityCheckbox.IsChecked == true
+            };
+
+
             this.DialogResult = true;
             this.Close();
         }
@@ -62,5 +73,13 @@ namespace lostakes
             this.DialogResult = false;
             this.Close();
         }
+
+    }
+
+    public class LaserGunOrWandData
+    {
+        public bool Wand { get; set; }
+        public bool Reverse{ get; set; }
+        public bool Standard { get; set; }
     }
 }

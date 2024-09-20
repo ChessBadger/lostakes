@@ -1,27 +1,30 @@
-﻿using System.Text.RegularExpressions;
-using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows;
 
 namespace lostakes
 {
     public partial class DollarLimitsWindow : Window
     {
+        // Properties to hold the limits
+        public string EntryLimit { get; set; }
+        public string PriceLimit { get; set; }
+        public string QtyLimit { get; set; }
+        public string CombinedLimit { get; set; }
+
         public DollarLimitsWindow()
         {
             InitializeComponent();
         }
 
-        // Ensure only numeric input is allowed in the textboxes
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^0-9]+"); // Only allow digits
-            e.Handled = regex.IsMatch(e.Text);
-        }
-
         // OK button handler
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
-            // Optionally, you can process the values entered here
+            // Set the values to the properties
+            EntryLimit = EntryLimitTextbox.Text;
+            PriceLimit = PriceLimitTextbox.Text;
+            QtyLimit = QtyLimitTextbox.Text;
+            CombinedLimit = CombinedLimitTextbox.Text;
+
+            // Close the window and return DialogResult as true
             this.DialogResult = true;
             this.Close();
         }
@@ -29,6 +32,7 @@ namespace lostakes
         // Cancel button handler
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
+            // Close the window without setting the limits
             this.DialogResult = false;
             this.Close();
         }

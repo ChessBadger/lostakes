@@ -6,70 +6,70 @@
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel>
                 <!-- Use UPC -->
-                <CheckBox Content="Use UPC" Margin="5"/>
+                <CheckBox x:Name="UseUpcCheckbox" Content="Use UPC" Margin="5"/>
 
                 <!-- Use I 2 of 5 with Min and Max TextBoxes -->
                 <StackPanel Orientation="Horizontal" Margin="5">
-                    <CheckBox Content="Use I 2 of 5" VerticalAlignment="Center" Checked="I2of5_Checked" Unchecked="I2of5_Unchecked"/>
+                    <CheckBox x:Name="I2Of5Checkbox" Content="Use I 2 of 5" VerticalAlignment="Center" Checked="I2of5_Checked" Unchecked="I2of5_Unchecked"/>
                     <TextBlock Text="Min (4)" Margin="20,0,10,0" VerticalAlignment="Center"/>
-                    <TextBox x:Name="I2of5MinTextbox" Width="40" MaxLength="2" IsEnabled="False"/>
+                    <TextBox x:Name="I2Of5MinTextbox" Width="40" MaxLength="2" IsEnabled="False" Text="12"/>
                     <TextBlock Text="Max (40)" Margin="20,0,10,0" VerticalAlignment="Center"/>
-                    <TextBox x:Name="I2of5MaxTextbox" Width="40" MaxLength="2" IsEnabled="False"/>
+                    <TextBox x:Name="I2Of5MaxTextbox" Width="40" MaxLength="2" IsEnabled="False" Text="12"/>
                 </StackPanel>
 
                 <!-- Use Code 39 with Min and Max TextBoxes -->
                 <StackPanel Orientation="Horizontal" Margin="5">
-                    <CheckBox Content="Use Code 39" VerticalAlignment="Center" Checked="Code39_Checked" Unchecked="Code39_Unchecked"/>
-                    <TextBlock Text="Min (2)" Margin="20,0,10,0" VerticalAlignment="Center"/>
-                    <TextBox x:Name="Code39MinTextbox" Width="40" MaxLength="2" IsEnabled="False"/>
+                    <CheckBox x:Name="Code39Checkbox" Content="Use Code 39" VerticalAlignment="Center" Checked="Code39_Checked" Unchecked="Code39_Unchecked"/>
+                    <TextBlock Text="Min (2)" Margin="20,0,10,0" VerticalAlignment="Center" />
+                    <TextBox x:Name="Code39MinTextbox" Width="40" MaxLength="2" IsEnabled="False" Text="2"/>
                     <TextBlock Text="Max (25)" Margin="20,0,10,0" VerticalAlignment="Center"/>
-                    <TextBox x:Name="Code39MaxTextbox" Width="40" MaxLength="2" IsEnabled="False"/>
+                    <TextBox x:Name="Code39MaxTextbox" Width="40" MaxLength="2" IsEnabled="False" Text="25"/>
                 </StackPanel>
 
                 <!-- Use Code 11 with Min and Max TextBoxes -->
                 <StackPanel Orientation="Horizontal" Margin="5">
-                    <CheckBox Content="Use Code 11" VerticalAlignment="Center" Checked="Code11_Checked" Unchecked="Code11_Unchecked"/>
+                    <CheckBox x:Name="Code11Checkbox" Content="Use Code 11" VerticalAlignment="Center" Checked="Code11_Checked" Unchecked="Code11_Unchecked"/>
                     <TextBlock Text="Min (4)" Margin="20,0,10,0" VerticalAlignment="Center"/>
-                    <TextBox x:Name="Code11MinTextbox" Width="40" MaxLength="2" IsEnabled="False"/>
+                    <TextBox x:Name="Code11MinTextbox" Width="40" MaxLength="2" IsEnabled="False" Text="4"/>
                     <TextBlock Text="Max (30)" Margin="20,0,10,0" VerticalAlignment="Center"/>
-                    <TextBox x:Name="Code11MaxTextbox" Width="40" MaxLength="2" IsEnabled="False"/>
+                    <TextBox x:Name="Code11MaxTextbox" Width="40" MaxLength="2" IsEnabled="False" Text="30"/>
                 </StackPanel>
 
                 <!-- Use Codebar with Min and Max TextBoxes -->
                 <StackPanel Orientation="Horizontal" Margin="5">
-                    <CheckBox Content="Use Codebar" VerticalAlignment="Center" Checked="Codebar_Checked" Unchecked="Codebar_Unchecked"/>
+                    <CheckBox x:Name="CodebarCheckbox" Content="Use Codebar" VerticalAlignment="Center" Checked="Codebar_Checked" Unchecked="Codebar_Unchecked"/>
                     <TextBlock Text="Min (2)" Margin="20,0,10,0" VerticalAlignment="Center"/>
-                    <TextBox x:Name="CodebarMinTextbox" Width="40" MaxLength="2" IsEnabled="False"/>
+                    <TextBox x:Name="CodebarMinTextbox" Width="40" MaxLength="2" IsEnabled="False" Text="2"/>
                     <TextBlock Text="Max (20)" Margin="20,0,10,0" VerticalAlignment="Center"/>
-                    <TextBox x:Name="CodebarMaxTextbox" Width="40" MaxLength="2" IsEnabled="False"/>
+                    <TextBox x:Name="CodebarMaxTextbox" Width="40" MaxLength="2" IsEnabled="False" Text="20"/>
                 </StackPanel>
 
                 <!-- Use Plessey with Min and Max TextBoxes -->
                 <StackPanel Orientation="Horizontal" Margin="5">
-                    <CheckBox Content="Use Plessey" VerticalAlignment="Center" Checked="Plessey_Checked" Unchecked="Plessey_Unchecked"/>
+                    <CheckBox x:Name="PlesseyCheckbox" Content="Use Plessey" VerticalAlignment="Center" Checked="Plessey_Checked" Unchecked="Plessey_Unchecked"/>
                     <TextBlock Text="Min (2)" Margin="20,0,10,0" VerticalAlignment="Center"/>
-                    <TextBox x:Name="PlesseyMinTextbox" Width="40" MaxLength="2" IsEnabled="False"/>
+                    <TextBox x:Name="PlesseyMinTextbox" Width="40" MaxLength="2" IsEnabled="False" Text="7"/>
                     <TextBlock Text="Max (40)" Margin="20,0,10,0" VerticalAlignment="Center"/>
-                    <TextBox x:Name="PlesseyMaxTextbox" Width="40" MaxLength="2" IsEnabled="False"/>
+                    <TextBox x:Name="PlesseyMaxTextbox" Width="40" MaxLength="2" IsEnabled="False" Text="7"/>
                 </StackPanel>
 
                 <!-- Use EAN-8 -->
-                <CheckBox Content="Use EAN-8" Margin="5"/>
+                <CheckBox x:Name="Ean8Checkbox" Content="Use EAN-8" Margin="5"/>
 
                 <!-- Use EAN-13 -->
-                <CheckBox Content="Use EAN-13" Margin="5"/>
+                <CheckBox x:Name="Ean13Checkbox" Content="Use EAN-13" Margin="5"/>
 
                 <!-- Use Code 128 with Min and Max TextBoxes -->
                 <StackPanel Orientation="Horizontal" Margin="5">
-                    <CheckBox Content="Use Code 128" VerticalAlignment="Center" Checked="Code128_Checked" Unchecked="Code128_Unchecked"/>
+                    <CheckBox x:Name="Code128Checkbox" Content="Use Code 128" VerticalAlignment="Center" Checked="Code128_Checked" Unchecked="Code128_Unchecked"/>
                     <TextBlock Text="Min (1)" Margin="20,0,10,0" VerticalAlignment="Center"/>
-                    <TextBox x:Name="Code128MinTextbox" Width="40" MaxLength="2" IsEnabled="False"/>
+                    <TextBox x:Name="Code128MinTextbox" Width="40" MaxLength="2" IsEnabled="False" Text="1"/>
                     <TextBlock Text="Max (60)" Margin="20,0,10,0" VerticalAlignment="Center"/>
-                    <TextBox x:Name="Code128MaxTextbox" Width="40" MaxLength="2" IsEnabled="False"/>
+                    <TextBox x:Name="Code128MaxTextbox" Width="40" MaxLength="2" IsEnabled="False" Text="60"/>
                 </StackPanel>
 
                 <!-- Keep UPC6 Compressed -->
-                <CheckBox Content="Keep UPC6 Compressed" Margin="5"/>
+                <CheckBox x:Name="KeepUpc6Checkbox" Content="Keep UPC6 Compressed" Margin="5"/>
 
                 <!-- Buttons -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">

@@ -7,25 +7,25 @@
             <!-- Entry Limit -->
             <StackPanel Orientation="Horizontal" Margin="5">
                 <TextBlock Text="Entry Limit:" VerticalAlignment="Center" Width="120"/>
-                <TextBox x:Name="EntryLimitTextbox" MaxLength="7" Width="100" PreviewTextInput="NumberValidationTextBox"/>
+                <TextBox x:Name="EntryLimitTextbox" MaxLength="7" Width="100"/>
             </StackPanel>
 
             <!-- Price Limit -->
             <StackPanel Orientation="Horizontal" Margin="5">
                 <TextBlock Text="Price Limit:" VerticalAlignment="Center" Width="120"/>
-                <TextBox x:Name="PriceLimitTextbox" MaxLength="4" Width="100" PreviewTextInput="NumberValidationTextBox"/>
+                <TextBox x:Name="PriceLimitTextbox" MaxLength="4" Width="100"/>
             </StackPanel>
 
-            <!-- Qty Limit -->
+            <!-- Quantity Limit -->
             <StackPanel Orientation="Horizontal" Margin="5">
-                <TextBlock Text="Qty Limit:" VerticalAlignment="Center" Width="120"/>
-                <TextBox x:Name="QtyLimitTextbox" MaxLength="9" Width="100" PreviewTextInput="NumberValidationTextBox"/>
+                <TextBlock Text="Quantity Limit:" VerticalAlignment="Center" Width="120"/>
+                <TextBox x:Name="QtyLimitTextbox" MaxLength="9" Width="100"/>
             </StackPanel>
 
             <!-- Combined Limit -->
             <StackPanel Orientation="Horizontal" Margin="5">
                 <TextBlock Text="Combined Limit:" VerticalAlignment="Center" Width="120"/>
-                <TextBox x:Name="CombinedLimitTextbox" MaxLength="9" Width="100" PreviewTextInput="NumberValidationTextBox"/>
+                <TextBox x:Name="CombinedLimitTextbox" MaxLength="9" Width="100"/>
             </StackPanel>
 
             <!-- Buttons -->

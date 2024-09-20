@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="DcSetupPage">
     <Grid Background="LightGray" Margin="10">
-        <!-- Define grid layout with two columns and two rows -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
@@ -11,27 +10,28 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- Group 2: Decimal Precision (top left) -->
-        <GroupBox Header="Decimal Precision" Grid.Column="0" Grid.Row="0" Margin="10">
+        <GroupBox Header="Decimal Precision" Grid.Column="0" Grid.Row="0" Margin="5">
             <StackPanel>
                 <!-- Price Decimals TextBox -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <TextBlock Text="Price Decimals:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                    <TextBox x:Name="PriceDecimalsTextbox" Width="60"/>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <TextBlock Text="Price Decimals:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <TextBox x:Name="PriceDecimalsTextbox" Width="40" Height="20"/>
                 </StackPanel>
 
                 <!-- Unit Decimals TextBox -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <TextBlock Text="Unit Decimals:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                    <TextBox x:Name="UnitDecimalsTextbox" Width="60"/>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <TextBlock Text="Unit Decimals:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <TextBox x:Name="UnitDecimalsTextbox" Width="40" Height="20"/>
                 </StackPanel>
 
                 <!-- Price Rounding ComboBox -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <TextBlock Text="Price Rounding:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                    <ComboBox x:Name="PriceRoundingComboBox" Width="120">
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <TextBlock Text="Price Rounding:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <ComboBox x:Name="PriceRoundingComboBox" Width="80" Height="20">
                         <ComboBoxItem Content="Traditional" />
                         <ComboBoxItem Content="Round Down" />
                         <ComboBoxItem Content="Round Up" />
@@ -41,20 +41,20 @@
         </GroupBox>
 
         <!-- Group 3: Priced SKU Options (top right) -->
-        <GroupBox Header="Priced SKU Options" Grid.Column="1" Grid.Row="0" Margin="10">
+        <GroupBox Header="Priced SKU Options" Grid.Column="1" Grid.Row="0" Margin="5">
             <StackPanel>
-                <CheckBox Content="Double Key Price" Margin="5"/>
-                <CheckBox Content="Use Quantity Constant" Margin="5"/>
+                <CheckBox x:Name="DoubleKeyPriceCheckbox" Content="Double Key Price" Margin="5"/>
+                <CheckBox x:Name="UseQuantityConstantCheckbox" Content="Use Quantity Constant" Margin="5"/>
             </StackPanel>
         </GroupBox>
 
         <!-- Group 1: Global Options (bottom left) -->
-        <GroupBox Header="Global Options" Grid.Column="0" Grid.Row="1" Margin="10">
+        <GroupBox Header="Global Options" Grid.Column="0" Grid.Row="1" Margin="5">
             <StackPanel>
                 <!-- Inventory Type at the top of Global Options -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <TextBlock Text="Inventory Type:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                    <ComboBox x:Name="InventoryTypeComboBox" Width="150">
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <TextBlock Text="Inventory Type:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <ComboBox x:Name="InventoryTypeComboBox" Width="120" Height="20">
                         <ComboBoxItem Content="Financial" />
                         <ComboBoxItem Content="Priced SKU" />
                         <ComboBoxItem Content="Quantity SKU" />
@@ -64,16 +64,16 @@
                     </ComboBox>
                 </StackPanel>
 
-                <CheckBox x:Name="UseDollarLimitsCheckbox" Content="Use Dollar Limits" Margin="5" 
+                <CheckBox x:Name="UseDollarLimitsCheckbox" Content="Use Dollar Limits" Margin="3" 
                   Checked="UseDollarLimitsCheckbox_Checked" />
-                <CheckBox Content="Use Category Discount" Margin="5"/>
-                <CheckBox Content="Standard Directories" Margin="5"/>
-                <CheckBox Content="Use Shelf Totals" Margin="5"/>
+                <CheckBox x:Name="UseCategoryDiscountCheckbox" Content="Use Category Discount" Margin="5"/>
+                <CheckBox x:Name="StandardDirectoriesCheckbox" Content="Standard Directories" Margin="5"/>
+                <CheckBox x:Name="UseShelfTotalsCheckbox" Content="Use Shelf Totals" Margin="5"/>
             </StackPanel>
         </GroupBox>
 
         <!-- Group 4: SKU Options (bottom right) -->
-        <GroupBox Header="SKU Options" Grid.Column="1" Grid.Row="1" Margin="10">
+        <GroupBox Header="SKU Options" Grid.Column="1" Grid.Row="1" Margin="5">
             <Grid>
                 <!-- Define a 2-column grid for SKU Options -->
                 <Grid.ColumnDefinitions>
@@ -82,48 +82,50 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Left column for Numeric SKU Only to Laser Gun -->
-                <StackPanel Grid.Column="0" Margin="5">
-                    <CheckBox Content="Numeric SKU Only" Margin="5"/>
-                    <CheckBox Content="Restrict SKU Length" Margin="5" Checked="RestrictSkuLength_Checked"/>
+                <StackPanel Grid.Column="0" Margin="3">
+                    <CheckBox x:Name="NumericSkuOnlyCheckbox" Content="Numeric SKU Only" Margin="5"/>
+                    <CheckBox x:Name="RestrictSkuLengthCheckbox" Content="Restrict SKU Length" Margin="3" 
+                              Checked="RestrictSkuLength_Checked" Unchecked="RestrictSkuLength_Unchecked"/>
                     <!-- Indented Set Length TextBox -->
-                    <StackPanel Orientation="Horizontal" Margin="30,0,0,5">
-                        <TextBlock Text="Set length to:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                        <TextBox x:Name="SetSkuLengthTextbox" Width="50" IsEnabled="False"/>
+                    <StackPanel Orientation="Horizontal" Margin="20,0,0,3">
+                        <TextBlock Text="Set length to:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBox x:Name="SetSkuLengthTextbox" Width="40" IsEnabled="False"/>
+                        <TextBlock Text="position(s)" VerticalAlignment="Center" Margin="5,0,0,0"/>
                     </StackPanel>
-                    <CheckBox x:Name="ChooseSymbologiesCheckbox" Content="Choose Symbologies" Margin="5"
+
+                    <CheckBox x:Name="ChooseSymbologiesCheckbox" Content="Choose Symbologies" Margin="3"
                         Checked="ChooseSymbologiesCheckbox_Checked"/>
-                    <TextBlock Text="Choose Check Digit:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                    <ComboBox x:Name="ChooseCheckDigitComboBox" Width="123" Margin="20,5,5,5">
+                    <TextBlock Text="Choose Check Digit:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <ComboBox x:Name="ChooseCheckDigitComboBox" Width="100" Height="20" Margin="15,0,0,3">
                         <ComboBoxItem Content="None" />
                         <ComboBoxItem Content="Mod 10" />
                         <ComboBoxItem Content="Mod 11" />
                         <ComboBoxItem Content="UPC" />
                     </ComboBox>
-                    <CheckBox Content="Key SKU Twice" Margin="5"/>
-                    <CheckBox Content="Scan SKU Twice" Margin="5"/>
-                    <CheckBox x:Name="ChooseLaserGunOrWandCheckbox" Content="Use Laser Gun or Wand" Margin="5" 
-                           Checked="ChooseLaserGunOrWand_Checked"/>
+                    <CheckBox x:Name="KeySkuTwiceCheckbox" Content="Key SKU Twice" Margin="5"/>
+                    <CheckBox x:Name="ScanSkuTwiceCheckbox" Content="Scan SKU Twice" Margin="5"/>
+                    <CheckBox x:Name="ChooseLaserGunOrWandCheckbox" Content="Use Laser Gun or Wand" Margin="3" 
+                              Checked="ChooseLaserGunOrWand_Checked"/>
                 </StackPanel>
 
-                <!-- Choose Check Digit ComboBox -->
-                <!--<StackPanel Orientation="Horizontal" Margin="5">
-                    <
-                </StackPanel>-->
-
                 <!-- Right column for the rest -->
-                <StackPanel Grid.Column="1" Margin="5">
-                    <CheckBox Content="Use Single SKU" Margin="5"/>
-                    <CheckBox Content="Use SKU Consolidation" Margin="5"/>
-                    <CheckBox Content="Block Financials" Margin="5"/>
-                    <CheckBox x:Name="LookupSkusCheckbox" Content="Lookup SKUs" Margin="5" Checked="LookupSkus_Checked" Unchecked="LookupSkus_Unchecked"/>
-                    <!-- Dependent checkboxes -->
+                <StackPanel Grid.Column="1" Margin="3">
+                    <CheckBox x:Name="UseSingleSkuCheckbox" Content="Use Single SKU" Margin="5"/>
+                    <CheckBox x:Name="UseSkuConsolidationCheckbox" Content="Use SKU Consolidation" Margin="5"/>
+                    <CheckBox x:Name="BlockFinancialsCheckbox" Content="Block Financials" Margin="5"/>
+                    <CheckBox x:Name="LookupSkusCheckbox" Content="Lookup SKUs" Margin="3" Checked="LookupSkus_Checked" Unchecked="LookupSkus_Unchecked"/>
                     <!-- Indented dependent checkboxes -->
-                    <CheckBox x:Name="LookupPricesCheckbox" Content="Lookup Prices" Margin="20,5,5,5" IsEnabled="False"/>
-                    <CheckBox x:Name="AllowNotFoundCheckbox" Content="Allow Not Found" Margin="20,5,5,5" IsEnabled="False"/>
-                    <CheckBox x:Name="SkipFoundPricesCheckbox" Content="Skip Found Prices > 0" Margin="20,5,5,5" IsEnabled="False"/>
-                    <CheckBox Content="Expand UPC6 into UPC12" Margin="5"/>
+                    <CheckBox x:Name="LookupPricesCheckbox" Content="Lookup Prices" Margin="20,3,3,3" IsEnabled="False"/>
+                    <CheckBox x:Name="AllowNotFoundCheckbox" Content="Allow Not Found" Margin="20,3,3,3" IsEnabled="False"/>
+                    <CheckBox x:Name="SkipFoundPricesCheckbox" Content="Skip Found Prices > 0" Margin="20,3,3,3" IsEnabled="False"/>
+                    <CheckBox x:Name="ExpandUpc6Checkbox" Content="Expand UPC6 into UPC12" Margin="3"/>
                 </StackPanel>
             </Grid>
         </GroupBox>
+
+        <!-- Save Button -->
+        <StackPanel Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="10,10,0,0" Grid.Row="2">
+            <Button x:Name="SaveButton" Content="Save" Width="80" Height="25" Click="SaveButton_Click"/>
+        </StackPanel>
     </Grid>
 </Page>
