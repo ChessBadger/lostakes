@@ -1,0 +1,38 @@
+﻿<Window x:Class="lostakes.DollarLimitsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Dollar Limits" Height="250" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+    <Grid Margin="10">
+        <StackPanel>
+            <!-- Entry Limit -->
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Entry Limit:" VerticalAlignment="Center" Width="120"/>
+                <TextBox x:Name="EntryLimitTextbox" MaxLength="7" Width="100" PreviewTextInput="NumberValidationTextBox"/>
+            </StackPanel>
+
+            <!-- Price Limit -->
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Price Limit:" VerticalAlignment="Center" Width="120"/>
+                <TextBox x:Name="PriceLimitTextbox" MaxLength="4" Width="100" PreviewTextInput="NumberValidationTextBox"/>
+            </StackPanel>
+
+            <!-- Qty Limit -->
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Qty Limit:" VerticalAlignment="Center" Width="120"/>
+                <TextBox x:Name="QtyLimitTextbox" MaxLength="9" Width="100" PreviewTextInput="NumberValidationTextBox"/>
+            </StackPanel>
+
+            <!-- Combined Limit -->
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Combined Limit:" VerticalAlignment="Center" Width="120"/>
+                <TextBox x:Name="CombinedLimitTextbox" MaxLength="9" Width="100" PreviewTextInput="NumberValidationTextBox"/>
+            </StackPanel>
+
+            <!-- Buttons -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+                <Button Content="OK" Width="75" Margin="5" Click="OKButton_Click"/>
+                <Button Content="Cancel" Width="75" Margin="5" Click="CancelButton_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

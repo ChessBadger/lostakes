@@ -1,0 +1,25 @@
+﻿<Window x:Class="lostakes.LaserGunOrWandWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Choose Laser Gun or Wand" Height="250" Width="350" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+    <Grid Margin="10">
+        <StackPanel>
+            <!-- Choose Wand or Laser -->
+            <CheckBox x:Name="WandCheckbox" Content="Wand" Margin="5" Checked="Wand_Checked" />
+            <CheckBox x:Name="LaserCheckbox" Content="Laser" Margin="5" Checked="Laser_Checked" Unchecked="Laser_Unchecked"/>
+
+            <!-- Laser Polarity Options -->
+            <StackPanel Orientation="Horizontal" Margin="5" Visibility="Collapsed" x:Name="PolarityOptionsPanel">
+                <TextBlock Text="Polarity:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <CheckBox x:Name="StandardPolarityCheckbox" Content="Standard Polarity" Margin="5" Checked="Standard_Checked"/>
+                <CheckBox x:Name="ReversePolarityCheckbox" Content="Reverse Polarity" Margin="5" Checked="Reverse_Checked"/>
+            </StackPanel>
+
+            <!-- Buttons -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+                <Button Content="OK" Width="75" Margin="5" Click="OKButton_Click"/>
+                <Button Content="Cancel" Width="75" Margin="5" Click="CancelButton_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
