@@ -22,6 +22,7 @@ namespace lostakes
         public DcSetupPage()
         {
             InitializeComponent();
+            LoadSettings();
         }
 
         // Enable or disable dependent checkboxes when "Lookup SKUs" is checked
@@ -358,5 +359,123 @@ namespace lostakes
                 combinedLimit = dollarLimitsWindow.CombinedLimit.PadLeft(9, '0'); // Ensure 9 digits
             }
         }
+
+        private void LoadConfigFromFile(string filePath)
+        {
+            if (!File.Exists(filePath)) return;
+
+            // Read the content from the file
+            string fileContent = File.ReadAllText(filePath);
+
+            // Ensure file length is as expected
+            if (fileContent.Length < 189) return; // Minimum expected length, handle appropriately if not met
+
+            // Initialize symbologyData if it's null
+            if (symbologyData == null)
+            {
+                symbologyData = new SymbologyData();
+            }
+
+            // Initialize laserGunOrWandData if it's null
+            if (laserGunOrWandData == null)
+            {
+                laserGunOrWandData = new LaserGunOrWandData();
+            }
+
+     
+
+            LookupSkusCheckbox.IsChecked = fileContent[124] == '1'; // 125th character
+            LookupPricesCheckbox.IsChecked = fileContent[125] == '1'; // 126th character
+            AllowNotFoundCheckbox.IsChecked = fileContent[186] == '1'; // 187th character
+            SkipFoundPricesCheckbox.IsChecked = fileContent[187] == '1'; // 188th character
+            ExpandUpc6Checkbox.IsChecked = fileContent[188] == '1'; // 189th character
+            UseCategoryDiscountCheckbox.IsChecked = fileContent[71] == '1'; // 72nd character
+            StandardDirectoriesCheckbox.IsChecked = fileContent[72] == '1'; // 73rd character
+            UseShelfTotalsCheckbox.IsChecked = fileContent[73] == '1'; // 74th character
+            DoubleKeyPriceCheckbox.IsChecked = fileContent[74] == '1'; // 75th character
+            UseQuantityConstantCheckbox.IsChecked = fileContent[77] == '1'; // 78th character
+            NumericSkuOnlyCheckbox.IsChecked = fileContent[80] == '1'; // 81st character
+            KeySkuTwiceCheckbox.IsChecked = fileContent[118] == '1'; // 119th character
+            ScanSkuTwiceCheckbox.IsChecked = fileContent[119] == '1'; // 120th character
+            UseSingleSkuCheckbox.IsChecked = fileContent[121] == '1'; // 122nd character
+            UseSkuConsolidationCheckbox.IsChecked = fileContent[122] == '1'; // 123rd character
+            BlockFinancialsCheckbox.IsChecked = fileContent[123] == '1'; // 124th character
+
+            // Update textboxes
+            SetSkuLengthTextbox.Text = fileContent.Substring(81, 2); // 82nd-83rd characters for SKU length
+            PriceDecimalsTextbox.Text = fileContent[76].ToString(); // 77th character for price decimals
+            UnitDecimalsTextbox.Text = fileContent[79].ToString(); // 80th character for unit decimals
+
+            // Update comboboxes
+            InventoryTypeComboBox.SelectedIndex = fileContent[70] - '1'; // 71st character (0-based index)
+            ChooseCheckDigitComboBox.SelectedIndex = fileContent[117] - '1'; // 118th character (0-based index)
+            PriceRoundingComboBox.SelectedIndex = fileContent[126] - '1'; // 127th character (0-based index)
+
+            // Load dollar limits if UseDollarLimitsCheckbox is checked
+            if (UseDollarLimitsCheckbox.IsChecked == true)
+            {
+                entryLimit = fileContent.Substring(26, 7); // 27-33 characters
+                priceLimit = fileContent.Substring(35, 4); // 36-39 characters
+                qtyLimit = fileContent.Substring(41, 9); // 42-50 characters
+                combinedLimit = fileContent.Substring(50, 9); // 51-59 characters
+            }
+
+            // Symbology data
+            if (fileContent[83] == '1') symbologyData.UseUpc = true; // 84th character
+            if (fileContent[84] == '1') symbologyData.KeepUpc6 = true; // 85th character
+            if (fileContent[85] == '1') symbologyData.I2Of5 = true; // 86th character
+            if (fileContent[90] == '1') symbologyData.Code39 = true; // 91st character
+            if (fileContent[95] == '1') symbologyData.Code11 = true; // 96th character
+            if (fileContent[100] == '1') symbologyData.Codebar = true; // 101st character
+            if (fileContent[105] == '1') symbologyData.Plessey = true; // 106th character
+            if (fileContent[110] == '1') symbologyData.Ean8 = true; // 111th character
+            if (fileContent[111] == '1') symbologyData.Ean13 = true; // 112th character
+            if (fileContent[112] == '1') symbologyData.Code128 = true; // 113th character
+
+            // Symbology length data
+            if (symbologyData.I2Of5)
+            {
+                symbologyData.I2Of5Min = fileContent.Substring(86, 2); // 87-88 characters
+                symbologyData.I2Of5Max = fileContent.Substring(88, 2); // 89-90 characters
+            }
+            if (symbologyData.Code39)
+            {
+                symbologyData.Code39Min = fileContent.Substring(91, 2); // 92-93 characters
+                symbologyData.Code39Max = fileContent.Substring(93, 2); // 94-95 characters
+            }
+            if (symbologyData.Code11)
+            {
+                symbologyData.Code11Min = fileContent.Substring(96, 2); // 97-98 characters
+                symbologyData.Code11Max = fileContent.Substring(98, 2); // 99-100 characters
+            }
+            if (symbologyData.Codebar)
+            {
+                symbologyData.CodebarMin = fileContent.Substring(101, 2); // 102-103 characters
+                symbologyData.CodebarMax = fileContent.Substring(103, 2); // 104-105 characters
+            }
+            if (symbologyData.Plessey)
+            {
+                symbologyData.PlesseyMin = fileContent.Substring(106, 2); // 107-108 characters
+                symbologyData.PlesseyMax = fileContent.Substring(108, 2); // 109-110 characters
+            }
+            if (symbologyData.Code128)
+            {
+                symbologyData.Code128Min = fileContent.Substring(113, 2); // 114-115 characters
+                symbologyData.Code128Max = fileContent.Substring(115, 2); // 116-117 characters
+            }
+
+            // Laser Gun or Wand data
+            if (fileContent[120] == '1') laserGunOrWandData.Wand = true; // 121st character
+            if (fileContent[120] == '2') laserGunOrWandData.Standard = true;
+            if (fileContent[120] == '3') laserGunOrWandData.Reverse = true;
+        }
+
+
+        private void LoadSettings()
+        {
+            // Call this method when loading the file, for example when the user clicks a "Load" button
+            LoadConfigFromFile(@"C:\\Users\\Laptop 122\\Desktop\\Store Prep\\HHConfig.dlf");
+        }
+
     }
 }

@@ -31,7 +31,7 @@
                 <!-- Price Rounding ComboBox -->
                 <StackPanel Orientation="Horizontal" Margin="3">
                     <TextBlock Text="Price Rounding:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                    <ComboBox x:Name="PriceRoundingComboBox" Width="80" Height="20">
+                    <ComboBox x:Name="PriceRoundingComboBox" Width="100" Height="20">
                         <ComboBoxItem Content="Traditional" />
                         <ComboBoxItem Content="Round Down" />
                         <ComboBoxItem Content="Round Up" />
@@ -90,7 +90,6 @@
                     <StackPanel Orientation="Horizontal" Margin="20,0,0,3">
                         <TextBlock Text="Set length to:" VerticalAlignment="Center" Margin="0,0,5,0"/>
                         <TextBox x:Name="SetSkuLengthTextbox" Width="40" IsEnabled="False"/>
-                        <TextBlock Text="position(s)" VerticalAlignment="Center" Margin="5,0,0,0"/>
                     </StackPanel>
 
                     <CheckBox x:Name="ChooseSymbologiesCheckbox" Content="Choose Symbologies" Margin="3"
