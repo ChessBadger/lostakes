@@ -110,6 +110,7 @@ namespace lostakes
             // Prepare the content for the file as per your specification
             StringBuilder fileContent = new StringBuilder();
 
+
             // Append 60 zeros (characters 1-60)
             fileContent.Append(new string('0', 60));
 
