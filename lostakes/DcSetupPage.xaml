@@ -65,7 +65,7 @@
                 </StackPanel>
 
                 <CheckBox x:Name="UseDollarLimitsCheckbox" Content="Use Dollar Limits" Margin="3" 
-                  Checked="UseDollarLimitsCheckbox_Checked" />
+                   Click="UseDollarLimitsCheckbox_Clicked"/>
                 <CheckBox x:Name="UseCategoryDiscountCheckbox" Content="Use Category Discount" Margin="5"/>
                 <CheckBox x:Name="StandardDirectoriesCheckbox" Content="Standard Directories" Margin="5"/>
                 <CheckBox x:Name="UseShelfTotalsCheckbox" Content="Use Shelf Totals" Margin="5"/>

@@ -345,7 +345,7 @@ namespace lostakes
 
 
         // Event handler for Use Dollar Limits checkbox
-        private void UseDollarLimitsCheckbox_Checked(object sender, RoutedEventArgs e)
+        private void UseDollarLimitsCheckbox_Clicked(object sender, RoutedEventArgs e)
         {
             // Show the Dollar Limits window
             DollarLimitsWindow dollarLimitsWindow = new DollarLimitsWindow();
@@ -383,8 +383,8 @@ namespace lostakes
                 laserGunOrWandData = new LaserGunOrWandData();
             }
 
-     
 
+            UseDollarLimitsCheckbox.IsChecked = fileContent[25] == '1'; //26th character
             LookupSkusCheckbox.IsChecked = fileContent[124] == '1'; // 125th character
             LookupPricesCheckbox.IsChecked = fileContent[125] == '1'; // 126th character
             AllowNotFoundCheckbox.IsChecked = fileContent[186] == '1'; // 187th character
