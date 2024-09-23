@@ -93,7 +93,7 @@
                     </StackPanel>
 
                     <CheckBox x:Name="ChooseSymbologiesCheckbox" Content="Choose Symbologies" Margin="3"
-                        Checked="ChooseSymbologiesCheckbox_Checked"/>
+                        Click="ChooseSymbologiesCheckbox_Clicked"/>
                     <TextBlock Text="Choose Check Digit:" VerticalAlignment="Center" Margin="0,0,5,0"/>
                     <ComboBox x:Name="ChooseCheckDigitComboBox" Width="100" Height="20" Margin="15,0,0,3">
                         <ComboBoxItem Content="None" />
@@ -104,7 +104,7 @@
                     <CheckBox x:Name="KeySkuTwiceCheckbox" Content="Key SKU Twice" Margin="5"/>
                     <CheckBox x:Name="ScanSkuTwiceCheckbox" Content="Scan SKU Twice" Margin="5"/>
                     <CheckBox x:Name="ChooseLaserGunOrWandCheckbox" Content="Use Laser Gun or Wand" Margin="3" 
-                              Checked="ChooseLaserGunOrWand_Checked"/>
+                              Click="ChooseLaserGunOrWand_Clicked"/>
                 </StackPanel>
 
                 <!-- Right column for the rest -->

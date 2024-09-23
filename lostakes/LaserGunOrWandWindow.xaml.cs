@@ -7,9 +7,11 @@ namespace lostakes
 
         public LaserGunOrWandData LaserGunOrWandData { get; private set; }
 
-        public LaserGunOrWandWindow()
+        public LaserGunOrWandWindow(LaserGunOrWandData existingLaserGunOrWandData)
         {
             InitializeComponent();
+            LaserGunOrWandData = existingLaserGunOrWandData;
+            this.Loaded += LaserGunOrWandWindow_Loaded;
         }
 
         // Wand checkbox is checked
@@ -74,7 +76,25 @@ namespace lostakes
             this.Close();
         }
 
+        private void LaserGunOrWandWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            WandCheckbox.IsChecked = LaserGunOrWandData.Wand;
+            LaserCheckbox.IsChecked = !LaserGunOrWandData.Wand; // Assume Laser is checked when Wand is not
+
+            if (LaserGunOrWandData.Wand)
+            {
+                PolarityOptionsPanel.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                PolarityOptionsPanel.Visibility = Visibility.Visible;
+                StandardPolarityCheckbox.IsChecked = LaserGunOrWandData.Standard;
+                ReversePolarityCheckbox.IsChecked = LaserGunOrWandData.Reverse;
+            }
+        }
+
     }
+
 
     public class LaserGunOrWandData
     {

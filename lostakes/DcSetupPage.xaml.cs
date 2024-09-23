@@ -46,41 +46,35 @@ namespace lostakes
             SkipFoundPricesCheckbox.IsChecked = false;
         }
 
-        private void ChooseSymbologiesCheckbox_Checked(object sender, RoutedEventArgs e)
+        private void ChooseSymbologiesCheckbox_Clicked(object sender, RoutedEventArgs e)
         {
-            // Show the Choose Symbology popup when the checkbox is checked
-            ChooseSymbologyWindow chooseSymbologyWindow = new ChooseSymbologyWindow();
-            chooseSymbologyWindow.Owner = Window.GetWindow(this); // Set the owner to the main window
-            bool? result = chooseSymbologyWindow.ShowDialog();
-
-            // Process the result if needed
-            if (result == true)
+            if (ChooseLaserGunOrWandCheckbox.IsChecked == true)
             {
-                // Logic to handle the confirmed values, if necessary
-                symbologyData = chooseSymbologyWindow.SymbologyData;
+                ChooseSymbologyWindow chooseSymbologyWindow = new ChooseSymbologyWindow(symbologyData);
+                chooseSymbologyWindow.Owner = Window.GetWindow(this); // Set the owner to the main window
+                bool? result = chooseSymbologyWindow.ShowDialog();
 
-            }
-            else
-            {
-                // Handle if user cancels or closes the popup
+                if (result == true)
+                {
+                    symbologyData = chooseSymbologyWindow.SymbologyData;
+                }
             }
         }
 
-        private void ChooseLaserGunOrWand_Checked(object sender, RoutedEventArgs e)
+        private void ChooseLaserGunOrWand_Clicked(object sender, RoutedEventArgs e)
         {
-            // Show the Laser Gun or Wand window when the checkbox is checked
-            LaserGunOrWandWindow laserGunOrWandWindow = new LaserGunOrWandWindow();
-            laserGunOrWandWindow.Owner = Window.GetWindow(this); // Set the owner to the main window
-            bool? result = laserGunOrWandWindow.ShowDialog();
+            if (ChooseLaserGunOrWandCheckbox.IsChecked != true)
+            {
+                // Show the Laser Gun or Wand window when the checkbox is checked
+                LaserGunOrWandWindow laserGunOrWandWindow = new LaserGunOrWandWindow(laserGunOrWandData);
+                laserGunOrWandWindow.Owner = Window.GetWindow(this); // Set the owner to the main window
+                bool? result = laserGunOrWandWindow.ShowDialog();
 
-            // Process the result if needed
-            if (result == true)
-            {
-                laserGunOrWandData = laserGunOrWandWindow.LaserGunOrWandData;
-            }
-            else
-            {
-                // Handle if the user cancels or closes the popup
+                // Process the result if needed
+                if (result == true)
+                {
+                    laserGunOrWandData = laserGunOrWandWindow.LaserGunOrWandData;
+                }
             }
         }
 
@@ -305,60 +299,73 @@ namespace lostakes
                     fileContent.Remove(86, 2).Insert(86, int.Parse(symbologyData.I2Of5Min).ToString("D2")); // 87-88
                     fileContent.Remove(88, 2).Insert(88, int.Parse(symbologyData.I2Of5Max).ToString("D2")); // 89-90
                 }
+
                 if (symbologyData.Code39)
                 {
                     fileContent[90] = '1'; // 91st character (index 90)
                     fileContent.Remove(91, 2).Insert(91, int.Parse(symbologyData.Code39Min).ToString("D2")); // 92-93
                     fileContent.Remove(93, 2).Insert(93, int.Parse(symbologyData.Code39Max).ToString("D2")); // 94-95
                 }
+              
                 if (symbologyData.Code11)
                 {
                     fileContent[95] = '1'; // 96th character (index 95)
                     fileContent.Remove(96, 2).Insert(96, int.Parse(symbologyData.Code11Min).ToString("D2")); // 97-98
                     fileContent.Remove(98, 2).Insert(98, int.Parse(symbologyData.Code11Max).ToString("D2")); // 99-100
                 }
+                
                 if (symbologyData.Codebar)
                 {
                     fileContent[100] = '1'; // 101st character (index 100)
                     fileContent.Remove(101, 2).Insert(101, int.Parse(symbologyData.CodebarMin).ToString("D2")); // 102-103
                     fileContent.Remove(103, 2).Insert(103, int.Parse(symbologyData.CodebarMax).ToString("D2")); // 104-105
                 }
+                
                 if (symbologyData.Plessey)
                 {
                     fileContent[105] = '1'; // 106th character (index 105)
                     fileContent.Remove(106, 2).Insert(106, int.Parse(symbologyData.PlesseyMin).ToString("D2")); // 107-108
                     fileContent.Remove(108, 2).Insert(108, int.Parse(symbologyData.PlesseyMax).ToString("D2")); // 109-110
+
                 }
+                
+
                 if (symbologyData.Ean8) fileContent[110] = '1'; // 111th character (index 110)
                 if (symbologyData.Ean13) fileContent[111] = '1'; // 112th character (index 111)
+
                 if (symbologyData.Code128)
                 {
                     fileContent[112] = '1'; // 113th character (index 112)
                     fileContent.Remove(113, 2).Insert(113, int.Parse(symbologyData.Code128Min).ToString("D2")); // 114-115
                     fileContent.Remove(115, 2).Insert(115, int.Parse(symbologyData.Code128Max).ToString("D2")); // 116-117
                 }
+                
             }
 
             // Write the content to the specified HHConfig.dlf file path
-            File.WriteAllText(@"C:\\Users\\Laptop 122\\Desktop\\Store Prep\\HHConfig.dlf", fileContent.ToString());
+            File.WriteAllText(@"C:\\Lostakes Data\\HHConfig.dlf", fileContent.ToString());
         }
 
 
         // Event handler for Use Dollar Limits checkbox
         private void UseDollarLimitsCheckbox_Clicked(object sender, RoutedEventArgs e)
         {
-            // Show the Dollar Limits window
-            DollarLimitsWindow dollarLimitsWindow = new DollarLimitsWindow();
-            bool? result = dollarLimitsWindow.ShowDialog();
-
-            if (result == true)
+            if (UseDollarLimitsCheckbox.IsChecked == true)
             {
-                // If the user clicks OK, retrieve the values
-                entryLimit = dollarLimitsWindow.EntryLimit.PadLeft(7, '0'); // Ensure 7 digits
-                priceLimit = dollarLimitsWindow.PriceLimit.PadLeft(4, '0'); // Ensure 4 digits
-                qtyLimit = dollarLimitsWindow.QtyLimit.PadLeft(9, '0'); // Ensure 9 digits
-                combinedLimit = dollarLimitsWindow.CombinedLimit.PadLeft(9, '0'); // Ensure 9 digits
+                // Show the Dollar Limits window
+                DollarLimitsWindow dollarLimitsWindow = new DollarLimitsWindow();
+                bool? result = dollarLimitsWindow.ShowDialog();
+
+                if (result == true)
+                {
+                    // If the user clicks OK, retrieve the values
+                    entryLimit = dollarLimitsWindow.EntryLimit.PadLeft(7, '0'); // Ensure 7 digits
+                    priceLimit = dollarLimitsWindow.PriceLimit.PadLeft(4, '0'); // Ensure 4 digits
+                    qtyLimit = dollarLimitsWindow.QtyLimit.PadLeft(9, '0'); // Ensure 9 digits
+                    combinedLimit = dollarLimitsWindow.CombinedLimit.PadLeft(9, '0'); // Ensure 9 digits
+                }
             }
+            
         }
 
         private void LoadConfigFromFile(string filePath)
@@ -412,17 +419,10 @@ namespace lostakes
             ChooseCheckDigitComboBox.SelectedIndex = fileContent[117] - '1'; // 118th character (0-based index)
             PriceRoundingComboBox.SelectedIndex = fileContent[126] - '1'; // 127th character (0-based index)
 
-            // Load dollar limits if UseDollarLimitsCheckbox is checked
-            if (UseDollarLimitsCheckbox.IsChecked == true)
-            {
-                entryLimit = fileContent.Substring(26, 7); // 27-33 characters
-                priceLimit = fileContent.Substring(35, 4); // 36-39 characters
-                qtyLimit = fileContent.Substring(41, 9); // 42-50 characters
-                combinedLimit = fileContent.Substring(50, 9); // 51-59 characters
-            }
 
             // Symbology data
             if (fileContent[83] == '1') symbologyData.UseUpc = true; // 84th character
+            if (fileContent[83] == '1') ChooseSymbologiesCheckbox.IsChecked = true; // 84th character
             if (fileContent[84] == '1') symbologyData.KeepUpc6 = true; // 85th character
             if (fileContent[85] == '1') symbologyData.I2Of5 = true; // 86th character
             if (fileContent[90] == '1') symbologyData.Code39 = true; // 91st character
@@ -433,40 +433,10 @@ namespace lostakes
             if (fileContent[111] == '1') symbologyData.Ean13 = true; // 112th character
             if (fileContent[112] == '1') symbologyData.Code128 = true; // 113th character
 
-            // Symbology length data
-            if (symbologyData.I2Of5)
-            {
-                symbologyData.I2Of5Min = fileContent.Substring(86, 2); // 87-88 characters
-                symbologyData.I2Of5Max = fileContent.Substring(88, 2); // 89-90 characters
-            }
-            if (symbologyData.Code39)
-            {
-                symbologyData.Code39Min = fileContent.Substring(91, 2); // 92-93 characters
-                symbologyData.Code39Max = fileContent.Substring(93, 2); // 94-95 characters
-            }
-            if (symbologyData.Code11)
-            {
-                symbologyData.Code11Min = fileContent.Substring(96, 2); // 97-98 characters
-                symbologyData.Code11Max = fileContent.Substring(98, 2); // 99-100 characters
-            }
-            if (symbologyData.Codebar)
-            {
-                symbologyData.CodebarMin = fileContent.Substring(101, 2); // 102-103 characters
-                symbologyData.CodebarMax = fileContent.Substring(103, 2); // 104-105 characters
-            }
-            if (symbologyData.Plessey)
-            {
-                symbologyData.PlesseyMin = fileContent.Substring(106, 2); // 107-108 characters
-                symbologyData.PlesseyMax = fileContent.Substring(108, 2); // 109-110 characters
-            }
-            if (symbologyData.Code128)
-            {
-                symbologyData.Code128Min = fileContent.Substring(113, 2); // 114-115 characters
-                symbologyData.Code128Max = fileContent.Substring(115, 2); // 116-117 characters
-            }
 
             // Laser Gun or Wand data
             if (fileContent[120] == '1') laserGunOrWandData.Wand = true; // 121st character
+            if (fileContent[120] == '1') ChooseLaserGunOrWandCheckbox.IsChecked = true; // 121st character
             if (fileContent[120] == '2') laserGunOrWandData.Standard = true;
             if (fileContent[120] == '3') laserGunOrWandData.Reverse = true;
         }
@@ -475,7 +445,7 @@ namespace lostakes
         private void LoadSettings()
         {
             // Call this method when loading the file, for example when the user clicks a "Load" button
-            LoadConfigFromFile(@"C:\\Users\\Laptop 122\\Desktop\\Store Prep\\HHConfig.dlf");
+            LoadConfigFromFile(@"C:\\Lostakes Data\\HHConfig.dlf");
         }
 
     }
