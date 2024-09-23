@@ -14,7 +14,7 @@ namespace lostakes
         public DollarLimitsWindow()
         {
             InitializeComponent();
-            LoadLimitsFromFile(@"C:\\Lostakes Data\\HHConfig.dlf");
+            LoadLimitsFromFile(@"C:\\Lostakes Data\\HHConfigData.dlf");
 
         }
 

@@ -92,14 +92,14 @@ namespace lostakes
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            // Create the HHConfig.dlf file
-            CreateHHConfigFile();
+            // Create the HHConfigData.dlf file
+            CreateHHConfigDataFile();
 
             // Navigate back to the Send to DC page
             NavigationService?.Navigate(new SendToDcPage());
         }
 
-        private void CreateHHConfigFile()
+        private void CreateHHConfigDataFile()
         {
             // Prepare the content for the file as per your specification
             StringBuilder fileContent = new StringBuilder();
@@ -342,8 +342,8 @@ namespace lostakes
                 
             }
 
-            // Write the content to the specified HHConfig.dlf file path
-            File.WriteAllText(@"C:\\Lostakes Data\\HHConfig.dlf", fileContent.ToString());
+            // Write the content to the specified HHConfigData.dlf file path
+            File.WriteAllText(@"C:\\Lostakes Data\\HHConfigData.dlf", fileContent.ToString());
         }
 
 
@@ -445,7 +445,7 @@ namespace lostakes
         private void LoadSettings()
         {
             // Call this method when loading the file, for example when the user clicks a "Load" button
-            LoadConfigFromFile(@"C:\\Lostakes Data\\HHConfig.dlf");
+            LoadConfigFromFile(@"C:\\Lostakes Data\\HHConfigData.dlf");
         }
 
     }
