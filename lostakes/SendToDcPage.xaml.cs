@@ -246,31 +246,37 @@ namespace lostakes
             // Step 4: Prepare the DLF data
             List<DlfRow> dlfRows = new List<DlfRow>();
 
-            // First row special case
-            if (records.Count >= 4)
+            // Determine how many special SKUs we need to add
+            int remainder = records.Count % 5;
+            int specialSkusToAdd = (remainder == 0) ? 0 : 5 - remainder;
+
+
+            // First row with special SKUs
+            if (records.Count >= 1)
             {
                 DlfRow firstRow = new DlfRow();
-                string firstRowSKU = "99999999999999999";
-                firstRow.Col1 = PadSku(firstRowSKU);
 
-                // Col2
-                string col2Value = GetPriceString(0, maxIntegerDigits) + PadSku(records[0].SKU);
-                firstRow.Col2 = col2Value;
+                if (remainder > 0)
+                {
+                    string firstRowSKU = "99999999999999999";
+                    firstRow.Col1 = PadSku(firstRowSKU);
+                }
+                
+                // Add special SKUs if necessary
+                for (int i = 0; i < specialSkusToAdd - 1; i++)
+                {
+                    records.Insert(0, new Record { SKU = "99999999999999999", Price = 0, PriceString = GetPriceString(0, maxIntegerDigits) });
+                }
 
-                // Col3
-                string col3Value = records[0].PriceString + PadSku(records[1].SKU);
-                firstRow.Col3 = col3Value;
-
-                // Col4
-                string col4Value = records[1].PriceString + PadSku(records[2].SKU);
-                firstRow.Col4 = col4Value;
-
-                // Col5
-                string col5Value = records[2].PriceString + PadSku(records[3].SKU);
-                firstRow.Col5 = col5Value;
-
-                // Col6
-                firstRow.Col6 = records[3].PriceString;
+                // Now create the first row using the first 5 records
+                if (records.Count >= 5)
+                {
+                    firstRow.Col2 = GetPriceString(0, maxIntegerDigits) + PadSku(records[0].SKU);
+                    firstRow.Col3 = records[0].PriceString + PadSku(records[1].SKU);
+                    firstRow.Col4 = records[1].PriceString + PadSku(records[2].SKU);
+                    firstRow.Col5 = records[2].PriceString + PadSku(records[3].SKU);
+                    firstRow.Col6 = records[3].PriceString;
+                }
 
                 dlfRows.Add(firstRow);
             }
@@ -280,7 +286,7 @@ namespace lostakes
                 return;
             }
 
-            // Process remaining records in groups of 5
+            // Step 5: Process remaining records in groups of 5
             for (int i = 4; i < records.Count; i += 5)
             {
                 DlfRow row = new DlfRow();
@@ -350,30 +356,30 @@ namespace lostakes
                 dlfRows.Add(row);
             }
 
-            // Step 5: Sort DLF rows A to Z by SKU (Col1), excluding the first row
+            // Step 6: Sort DLF rows A to Z by SKU (Col1), excluding the first row
             var sortedDlfRows = dlfRows.Skip(1).OrderBy(r => r.Col1.Trim()).ToList();
 
             // Append the first row at the end
             sortedDlfRows.Add(dlfRows[0]);
 
-            // Step 6: Write to DLF file
+            // Step 7: Write to DLF file
 
             // Prepare the header lines with dynamic priceLength
             List<string> headerLines = new List<string>
-            {
-                "0,0,0",
-                "17,15,0",
-                $"{priceLength},14,0",
-                "17,15,0",
-                $"{priceLength},14,0",
-                "17,15,0",
-                $"{priceLength},14,0",
-                "17,15,0",
-                $"{priceLength},14,0",
-                "17,15,0",
-                $"{priceLength},14,0",
-                "0,0,0"
-            };
+    {
+        "0,0,0",
+        "17,15,0",
+        $"{priceLength},14,0",
+        "17,15,0",
+        $"{priceLength},14,0",
+        "17,15,0",
+        $"{priceLength},14,0",
+        "17,15,0",
+        $"{priceLength},14,0",
+        "17,15,0",
+        $"{priceLength},14,0",
+        "0,0,0"
+    };
 
             using (StreamWriter writer = new StreamWriter(outputDlfPath))
             {
@@ -390,6 +396,7 @@ namespace lostakes
                 }
             }
         }
+
 
         // Helper method to format the price string
         static string GetPriceString(decimal price, int maxIntegerDigits)
