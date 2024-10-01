@@ -82,7 +82,7 @@ namespace lostakes
 
                         // Now process itemast.dbf and generate output.dlf
                         // We'll define the output file path in the selected folder
-                        string outputDlfPath = Path.Combine(selectedFolder, "OUTPUT.DLF");
+                        string outputDlfPath = Path.Combine(selectedFolder, "SKUFILE.DLF");
 
                         // Step 1: Read the DBF file and extract SKU and Price
                         List<Record> records = new List<Record>();
