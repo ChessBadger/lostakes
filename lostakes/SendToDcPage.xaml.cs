@@ -98,7 +98,7 @@ namespace lostakes
                         GenerateOutputDlfFromItemast(itemastDbfPath, outputDlfPath);
 
                         // Notify the user that the process is complete
-                        MessageBox.Show("Cards Created and DLF files have been generated successfully!");
+                        MessageBox.Show("Cards Created!");
                     }
                     else
                     {
@@ -226,8 +226,8 @@ namespace lostakes
                 }
             }
 
-            // Step 2: Sort records Z to A by SKU
-            records = records.OrderByDescending(r => r.SKU).ToList();
+            // Step 2: Sort records Z to A by SKU, without ignoring leading zeros, and with symbols after numbers but before letters
+            records = records.OrderByDescending(r => r.SKU, StringComparer.Ordinal).ToList();
 
             // Step 3: Determine the maximum integer part length of the price
             decimal maxPrice = records.Max(r => r.Price);
