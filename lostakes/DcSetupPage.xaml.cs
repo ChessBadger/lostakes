@@ -352,10 +352,11 @@ namespace lostakes
         {
             if (UseDollarLimitsCheckbox.IsChecked == true)
             {
-                // Show the Dollar Limits window
+                // Show the Dollar Limits window only when checked
                 DollarLimitsWindow dollarLimitsWindow = new DollarLimitsWindow();
                 bool? result = dollarLimitsWindow.ShowDialog();
 
+                // Update the limits only if the window was opened and the user confirmed
                 if (result == true)
                 {
                     // If the user clicks OK, retrieve the values
@@ -365,8 +366,14 @@ namespace lostakes
                     combinedLimit = dollarLimitsWindow.CombinedLimit.PadLeft(9, '0'); // Ensure 9 digits
                 }
             }
-            
+            // If the checkbox is unchecked, do not modify the dollar limits
+            else
+            {
+                // The checkbox is unchecked, but do nothing to alter the current limits
+                // (The existing limits remain unchanged in the file until the window is opened)
+            }
         }
+
 
         private void LoadConfigFromFile(string filePath)
         {
@@ -389,6 +396,12 @@ namespace lostakes
             {
                 laserGunOrWandData = new LaserGunOrWandData();
             }
+
+            // Extract values using Substring
+            entryLimit = fileContent.Substring(26, 7);  // Entry Limit from characters 27-33 (index 26-32)
+            priceLimit = fileContent.Substring(35, 4);  // Price Limit from characters 36-39 (index 35-38)
+            qtyLimit = fileContent.Substring(41, 9);    // Quantity Limit from characters 42-50 (index 41-49)
+            combinedLimit = fileContent.Substring(50, 9);  // Combined Limit from characters 51-59 (index 50-58)
 
 
             UseDollarLimitsCheckbox.IsChecked = fileContent[25] == '1'; //26th character
