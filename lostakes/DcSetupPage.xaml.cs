@@ -499,6 +499,16 @@ namespace lostakes
             LookupPricesCheckbox.IsEnabled = true;
             AllowNotFoundCheckbox.IsEnabled = true;
             SkipFoundPricesCheckbox.IsEnabled = true;
+
+
+            NumericSkuOnlyCheckbox.IsChecked = true;
+            ChooseSymbologiesCheckbox.IsChecked = true;
+            ChooseLaserGunOrWandCheckbox.IsChecked = true;
+            UseSingleSkuCheckbox.IsChecked = true;
+            UseSkuConsolidationCheckbox.IsChecked = true;
+            LookupSkusCheckbox.IsChecked = true;
+
+
         }
 
 
