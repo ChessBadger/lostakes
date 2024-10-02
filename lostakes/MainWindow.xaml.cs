@@ -34,6 +34,7 @@ namespace lostakes
         private void CheckAndCreateDirectory()
         {
             string path = @"C:\Lostakes Data";
+            string dataPath = @"C:\Data";
 
             // Check if the directory exists
             if (!Directory.Exists(path))
@@ -41,9 +42,11 @@ namespace lostakes
                 // Create the directory if it does not exist
                 Directory.CreateDirectory(path);
             }
-            else
+            if (!Directory.Exists(dataPath))
             {
+                Directory.CreateDirectory(dataPath);
             }
+
         }
 
         private void CreateAndPopulateDlfFiles()

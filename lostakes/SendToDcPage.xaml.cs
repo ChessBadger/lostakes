@@ -52,7 +52,6 @@ namespace lostakes
                 // Process location.dbf to generate location_output.dlf
                 GenerateOutputDlfFromDbf(locationDbfPath, locationOutputDlfPath, 3, 26, "location");
 
-
                 // Ask the user to select a folder where the combined DLF files should be saved
                 using (var folderDialog = new FolderBrowserDialog())
                 {
@@ -80,25 +79,38 @@ namespace lostakes
                             string sourceFilePath = Path.Combine(lostakesDataPath, fileName);
                             string destinationFilePath = Path.Combine(selectedFolder, fileName);
 
-                            if (File.Exists(sourceFilePath))
+                            try
                             {
-                                File.Copy(sourceFilePath, destinationFilePath, overwrite: true);
+                                if (File.Exists(sourceFilePath))
+                                {
+                                    File.Copy(sourceFilePath, destinationFilePath, overwrite: true);
+                                }
+                                else
+                                {
+                                    // Display which file wasn't found
+                                    MessageBox.Show($"File not found: {sourceFilePath}");
+                                }
                             }
-                            else
+                            catch (Exception fileCopyEx)
                             {
-                                MessageBox.Show($"File not found: {sourceFilePath}");
+                                MessageBox.Show($"An error occurred while copying the file '{fileName}': {fileCopyEx.Message}");
                             }
                         }
 
-                        // Now process itemast.dbf and generate output.dlf
-                        // We'll define the output file path in the selected folder
-                        string outputDlfPath = Path.Combine(selectedFolder, "SKUFILE.DLF");
+                        string itemastPath = Path.Combine(@"C:\Data\itemast.dbf");
 
-                        // Process itemast.dbf to generate OUTPUT.DLF
-                        GenerateOutputDlfFromItemast(itemastDbfPath, outputDlfPath);
+                        if (File.Exists(itemastPath))
+                        {
+                            // Now process itemast.dbf and generate output.dlf
+                            string outputDlfPath = Path.Combine(selectedFolder, "SKUFILE.DLF");
+                            // Process itemast.dbf to generate SKUFILE.DLF
+                            GenerateOutputDlfFromItemast(itemastDbfPath, outputDlfPath);
+                        }
 
                         // Notify the user that the process is complete
                         MessageBox.Show("Cards Created!");
+                        // Clean up non-default files
+                        DeleteNonDefaultFiles(areaOutputDlfPath, categoryOutputDlfPath, locationOutputDlfPath);
                     }
                     else
                     {
@@ -112,6 +124,48 @@ namespace lostakes
                 // Handle any exceptions and show the error message
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
+
+
+            
+        }
+
+        private void DeleteNonDefaultFiles(string areaOutputDlfPath, string categoryOutputDlfPath, string locationOutputDlfPath)
+        {
+            // After the files have been copied to the selected folder, delete the temporary output files
+            try
+            {
+                // Delete areaOutputDlfPath
+                if (File.Exists(areaOutputDlfPath))
+                {
+                    File.Delete(areaOutputDlfPath);
+                }
+
+                // Delete categoryOutputDlfPath
+                if (File.Exists(categoryOutputDlfPath))
+                {
+                    File.Delete(categoryOutputDlfPath);
+                }
+
+                // Delete locationOutputDlfPath
+                if (File.Exists(locationOutputDlfPath))
+                {
+                    File.Delete(locationOutputDlfPath);
+                }
+
+                // Delete skufile.dbf from C:\Lostakes Data
+                string skuFileDbfPath = @"C:\Lostakes Data\skufile.dbf";
+                if (File.Exists(skuFileDbfPath))
+                {
+                    File.Delete(skuFileDbfPath);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that occur during the file deletion process
+                MessageBox.Show($"An error occurred while deleting files: {ex.Message}");
+            }
+
         }
 
         // Generate the _output.dlf file from the dbf file, with sorting, padding, and adjustments
