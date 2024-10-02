@@ -17,6 +17,10 @@
 
                     <!-- Button to receive from DC -->
                     <Button x:Name="ReceiveFromDcButton" Content="Receive from DC" Width="150" Height="40" Margin="10" Click="ReceiveFromDcButton_Click"/>
+
+
+                    <Button x:Name="ClearBackupButton" Content="Clear/Backup" Width="150" Height="40" Margin="10" Click="ClearBackupButton_Click"/>
+
                 </StackPanel>
             </Frame.Content>
         </Frame>

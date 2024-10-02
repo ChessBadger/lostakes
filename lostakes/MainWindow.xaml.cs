@@ -89,6 +89,10 @@ namespace lostakes
             MessageBox.Show("Receiving from DC...");
         }
 
+        private void ClearBackupButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new ClearBackup());
+        }
     }
 
 }
