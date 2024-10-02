@@ -17,6 +17,14 @@ namespace lostakes
             InitializeComponent();
         }
 
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            Window.GetWindow(this).Close();
+        }
+
+
         private void CreateCardsButton_Click(object sender, RoutedEventArgs e)
         {
             // Define paths to the DBF files
@@ -97,7 +105,7 @@ namespace lostakes
                             }
                         }
 
-                        string itemastPath = Path.Combine(@"C:\Wintakes\Data\itemast.dbf");
+                        string itemastPath = Path.Combine(@"C:\Wintakes\Data\fitemast.dbf");
 
                         if (File.Exists(itemastPath))
                         {

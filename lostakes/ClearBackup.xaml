@@ -9,19 +9,16 @@
       Title="ClearBackup">
 
     <Grid Background="LightGray">
-                <!-- StackPanel for organizing buttons -->
-                <StackPanel x:Name="MainStackPanel" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    
-                    <Button x:Name="BackupButton" Content="Backup Everything" Width="150" Height="40" Margin="10" Click="BackupButton_Click"/>
-
-                    <Button x:Name="ClearUploadsButton" Content="Clear Uploads" Width="150" Height="40" Margin="10" Click="ClearUploadsButton_Click"/>
-
-                    <Button x:Name="ClearDirectoriesButton" Content="Clear Directories" Width="150" Height="40" Margin="10" Click="ClearDirectoriesButton_Click"/>
-
-                    <Button x:Name="ClearItemButton" Content="Clear Item Master" Width="150" Height="40" Margin="10" Click="ClearItemButton_Click"/>
-
-                    <Button x:Name="ClearEverythingButton" Content="Clear Everything" Width="150" Height="40" Margin="10" Click="ClearEverythingButton_Click"/>
-
+        <!-- StackPanel for organizing buttons in the center -->
+        <StackPanel x:Name="MainStackPanel" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button x:Name="BackupButton" Content="Backup Everything" Width="150" Height="40" Margin="10" Click="BackupButton_Click"/>
+            <Button x:Name="ClearUploadsButton" Content="Clear Uploads" Width="150" Height="40" Margin="10" Click="ClearUploadsButton_Click"/>
+            <Button x:Name="ClearDirectoriesButton" Content="Clear Directories" Width="150" Height="40" Margin="10" Click="ClearDirectoriesButton_Click"/>
+            <Button x:Name="ClearItemButton" Content="Clear Item Master" Width="150" Height="40" Margin="10" Click="ClearItemButton_Click"/>
+            <Button x:Name="ClearEverythingButton" Content="Clear Everything" Width="150" Height="40" Margin="10" Click="ClearEverythingButton_Click"/>
         </StackPanel>
+
+        <!-- Back button positioned in the lower-left corner -->
+        <Button x:Name="BackButton" Content="Back to Main Menu" Width="150" Height="40" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" Click="BackButton_Click"/>
     </Grid>
 </Page>

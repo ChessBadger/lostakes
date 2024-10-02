@@ -10,5 +10,8 @@
             <!-- DC Setup Button -->
             <Button x:Name="DcSetupButton" Content="DC Setup" Width="150" Height="40" Margin="10" Click="DcSetupButton_Click"/>
         </StackPanel>
+
+        <Button x:Name="BackButton" Content="Back to Main Menu" Width="150" Height="40" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" Click="BackButton_Click"/>
+
     </Grid>
 </Page>

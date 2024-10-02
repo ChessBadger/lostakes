@@ -99,5 +99,17 @@ namespace lostakes
             }
         }
 
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Create an instance of MainWindow
+            MainWindow mainWindow = new MainWindow();
+
+            // Show the MainWindow
+            mainWindow.Show();
+
+            // Close the current window
+            Window.GetWindow(this).Close();
+        }
+
     }
 }

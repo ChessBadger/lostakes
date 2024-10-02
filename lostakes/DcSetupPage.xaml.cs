@@ -511,6 +511,9 @@ namespace lostakes
 
         }
 
-
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new SendToDcPage());
+        }
     }
 }
