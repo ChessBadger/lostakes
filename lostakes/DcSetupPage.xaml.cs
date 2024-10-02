@@ -461,5 +461,46 @@ namespace lostakes
             LoadConfigFromFile(@"C:\\Lostakes Data\\HHConfigData.dlf");
         }
 
+        private void InventoryTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Check if "Financial" is selected
+            if (InventoryTypeComboBox.SelectedItem is ComboBoxItem selectedItem &&
+                selectedItem.Content.ToString() == "Financial")
+            {
+                // Disable all options in the SKU Options groupbox
+                SetSkuOptionsEnabled(false);
+                LookupPricesCheckbox.IsEnabled = false;
+                AllowNotFoundCheckbox.IsEnabled = false;
+                SkipFoundPricesCheckbox.IsEnabled = false;
+            }
+            else
+            {
+                // Enable all options in the SKU Options groupbox
+                SetSkuOptionsEnabled(true);
+            }
+  
+        }
+        private void SetSkuOptionsEnabled(bool isEnabled)
+        {
+            // Disable or enable all checkboxes in the SKU Options groupbox
+            NumericSkuOnlyCheckbox.IsEnabled = isEnabled;
+            RestrictSkuLengthCheckbox.IsEnabled = isEnabled;
+            SetSkuLengthTextbox.IsEnabled = isEnabled && RestrictSkuLengthCheckbox.IsChecked == true;
+            ChooseSymbologiesCheckbox.IsEnabled = isEnabled;
+            ChooseCheckDigitComboBox.IsEnabled = isEnabled;
+            KeySkuTwiceCheckbox.IsEnabled = isEnabled;
+            ScanSkuTwiceCheckbox.IsEnabled = isEnabled;
+            ChooseLaserGunOrWandCheckbox.IsEnabled = isEnabled;
+            UseSingleSkuCheckbox.IsEnabled = isEnabled;
+            UseSkuConsolidationCheckbox.IsEnabled = isEnabled;
+            BlockFinancialsCheckbox.IsEnabled = isEnabled;
+            LookupSkusCheckbox.IsEnabled = isEnabled;
+            ExpandUpc6Checkbox.IsEnabled = isEnabled;
+            LookupPricesCheckbox.IsEnabled = true;
+            AllowNotFoundCheckbox.IsEnabled = true;
+            SkipFoundPricesCheckbox.IsEnabled = true;
+        }
+
+
     }
 }
