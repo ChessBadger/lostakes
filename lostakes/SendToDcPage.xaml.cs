@@ -105,7 +105,7 @@ namespace lostakes
                             }
                         }
 
-                        string itemastPath = Path.Combine(@"C:\Wintakes\Data\fitemast.dbf");
+                        string itemastPath = Path.Combine(@"C:\Wintakes\Data\itemast.dbf");
 
                         if (File.Exists(itemastPath))
                         {
