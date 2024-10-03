@@ -23,6 +23,7 @@ namespace lostakes
         {
             InitializeComponent();
             LoadSettings();
+
         }
 
         // Enable or disable dependent checkboxes when "Lookup SKUs" is checked
@@ -48,22 +49,24 @@ namespace lostakes
 
         private void ChooseSymbologiesCheckbox_Clicked(object sender, RoutedEventArgs e)
         {
-            if (ChooseLaserGunOrWandCheckbox.IsChecked == true)
+            if (ChooseSymbologiesCheckbox.IsChecked != false)
             {
                 ChooseSymbologyWindow chooseSymbologyWindow = new ChooseSymbologyWindow(symbologyData);
                 chooseSymbologyWindow.Owner = Window.GetWindow(this); // Set the owner to the main window
                 bool? result = chooseSymbologyWindow.ShowDialog();
+
 
                 if (result == true)
                 {
                     symbologyData = chooseSymbologyWindow.SymbologyData;
                 }
             }
+
         }
 
         private void ChooseLaserGunOrWand_Clicked(object sender, RoutedEventArgs e)
         {
-            if (ChooseLaserGunOrWandCheckbox.IsChecked != true)
+            if (ChooseLaserGunOrWandCheckbox.IsChecked != false)
             {
                 // Show the Laser Gun or Wand window when the checkbox is checked
                 LaserGunOrWandWindow laserGunOrWandWindow = new LaserGunOrWandWindow(laserGunOrWandData);
@@ -469,9 +472,7 @@ namespace lostakes
             {
                 // Disable all options in the SKU Options groupbox
                 SetSkuOptionsEnabled(false);
-                LookupPricesCheckbox.IsEnabled = false;
-                AllowNotFoundCheckbox.IsEnabled = false;
-                SkipFoundPricesCheckbox.IsEnabled = false;
+                
             }
             else
             {
@@ -485,10 +486,9 @@ namespace lostakes
             // Disable or enable all checkboxes in the SKU Options groupbox
             NumericSkuOnlyCheckbox.IsEnabled = isEnabled;
             RestrictSkuLengthCheckbox.IsEnabled = isEnabled;
-            SetSkuLengthTextbox.IsEnabled = isEnabled && RestrictSkuLengthCheckbox.IsChecked == true;
+            SetSkuLengthTextbox.IsEnabled = isEnabled && RestrictSkuLengthCheckbox.IsChecked == isEnabled;
             ChooseSymbologiesCheckbox.IsEnabled = isEnabled;
             ChooseCheckDigitComboBox.IsEnabled = isEnabled;
-            KeySkuTwiceCheckbox.IsEnabled = isEnabled;
             ScanSkuTwiceCheckbox.IsEnabled = isEnabled;
             ChooseLaserGunOrWandCheckbox.IsEnabled = isEnabled;
             UseSingleSkuCheckbox.IsEnabled = isEnabled;
@@ -496,18 +496,28 @@ namespace lostakes
             BlockFinancialsCheckbox.IsEnabled = isEnabled;
             LookupSkusCheckbox.IsEnabled = isEnabled;
             ExpandUpc6Checkbox.IsEnabled = isEnabled;
-            LookupPricesCheckbox.IsEnabled = true;
-            AllowNotFoundCheckbox.IsEnabled = true;
-            SkipFoundPricesCheckbox.IsEnabled = true;
+            LookupPricesCheckbox.IsEnabled = isEnabled;
+            AllowNotFoundCheckbox.IsEnabled = isEnabled;
+            SkipFoundPricesCheckbox.IsEnabled = isEnabled;
+            KeySkuTwiceCheckbox.IsEnabled = isEnabled;
 
 
-            NumericSkuOnlyCheckbox.IsChecked = true;
-            ChooseSymbologiesCheckbox.IsChecked = true;
-            ChooseLaserGunOrWandCheckbox.IsChecked = true;
-            UseSingleSkuCheckbox.IsChecked = true;
-            UseSkuConsolidationCheckbox.IsChecked = true;
-            LookupSkusCheckbox.IsChecked = true;
+            NumericSkuOnlyCheckbox.IsChecked = isEnabled;
+            ChooseSymbologiesCheckbox.IsChecked = isEnabled;
+            ChooseLaserGunOrWandCheckbox.IsChecked = isEnabled;
+            UseSingleSkuCheckbox.IsChecked = isEnabled;
+            UseSkuConsolidationCheckbox.IsChecked = isEnabled;
+            LookupSkusCheckbox.IsChecked = isEnabled;
 
+            symbologyData.UseUpc = isEnabled;
+            symbologyData.Ean8 = isEnabled;
+            symbologyData.Ean13 = isEnabled;
+
+            LookupPricesCheckbox.IsChecked = isEnabled;
+            AllowNotFoundCheckbox.IsChecked = isEnabled;
+            SkipFoundPricesCheckbox.IsChecked = isEnabled;
+
+            laserGunOrWandData.Wand = isEnabled;
 
         }
 
