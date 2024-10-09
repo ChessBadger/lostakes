@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using System.IO;
+using System.Windows.Forms;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace lostakes
 {
@@ -54,15 +56,16 @@ namespace lostakes
                 CombinedLimit = fileContent.Substring(50, 9);  // Combined Limit from characters 51-59 (index 50-58)
 
                 // Populate the textboxes with the extracted values
-                EntryLimitTextbox.Text = EntryLimit;
-                PriceLimitTextbox.Text = PriceLimit;
-                QtyLimitTextbox.Text = QtyLimit;
-                CombinedLimitTextbox.Text = CombinedLimit;
+                EntryLimitTextbox.Text = EntryLimit.Replace("0", "");
+                PriceLimitTextbox.Text = PriceLimit.Replace("0", "");
+                QtyLimitTextbox.Text = QtyLimit.Replace("0", "");
+                CombinedLimitTextbox.Text = CombinedLimit.Replace("0", "");
             }
             catch (Exception ex)
             {
-                //
+                MessageBox.Show(ex.Message);
             }
         }
+
     }
 }
