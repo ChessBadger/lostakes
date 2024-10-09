@@ -98,6 +98,24 @@ namespace lostakes
             // Create the HHConfigData.dlf file
             CreateHHConfigDataFile();
 
+            // Open the modal dialog for account name
+            SaveAccount accountNameDialog = new SaveAccount();
+            if (accountNameDialog.ShowDialog() == true)
+            {
+                // Get the account name from the modal
+                string accountName = accountNameDialog.AccountName;
+
+                if (!string.IsNullOrEmpty(accountName))
+                {
+                    // Define the source and destination paths
+                    string sourceFilePath = @"C:\Lostakes Data\HHConfigData.dlf";
+                    string destinationFilePath = $@"C:\Lostakes Data\Accounts\{accountName}_HHConfigData.dlf";
+
+                    // Copy the file with the account name prepended
+                    File.Copy(sourceFilePath, destinationFilePath, overwrite: true);
+                }
+            }
+
             // Navigate back to the Send to DC page
             NavigationService?.Navigate(new SendToDcPage());
         }
@@ -473,6 +491,11 @@ namespace lostakes
                 // Disable all options in the SKU Options groupbox
                 SetSkuOptionsEnabled(false);
                 
+            }
+            else if (InventoryTypeComboBox.SelectedItem is ComboBoxItem secondSelectedItem &&
+                secondSelectedItem.Content.ToString() == "Quantity SKU")
+            {
+                //
             }
             else
             {

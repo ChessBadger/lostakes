@@ -273,11 +273,22 @@ namespace lostakes
 
         private void DcSetupButton_Click(object sender, RoutedEventArgs e)
         {
-            // Navigate to the DC Setup Page
-            NavigationService.Navigate(new DcSetupPage());
+            // Define the path to the Accounts folder
+            string accountsFolderPath = @"C:\Lostakes Data\Accounts";
 
-
+            // Check if the folder exists and contains any files
+            if (Directory.Exists(accountsFolderPath) && Directory.GetFiles(accountsFolderPath).Any())
+            {
+                // If there are account files, navigate to the Accounts page
+                NavigationService.Navigate(new Accounts());
+            }
+            else
+            {
+                // Otherwise, navigate to the DC Setup Page
+                NavigationService.Navigate(new DcSetupPage());
+            }
         }
+
 
         private void GenerateOutputDlfFromItemast(string itemastDbfPath, string outputDlfPath)
         {
