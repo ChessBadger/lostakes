@@ -12,6 +12,7 @@
         <!-- StackPanel for organizing buttons in the center -->
         <StackPanel x:Name="MainStackPanel" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button x:Name="BackupButton" Content="Backup Everything" Width="150" Height="40" Margin="10" Click="BackupButton_Click"/>
+            <Button x:Name="RestoreButton" Content="Restore Everything" Width="150" Height="40" Margin="10" Click="RestoreButton_Click" />
             <Button x:Name="ClearUploadsButton" Content="Clear Uploads" Width="150" Height="40" Margin="10" Click="ClearUploadsButton_Click"/>
             <Button x:Name="ClearDirectoriesButton" Content="Clear Directories" Width="150" Height="40" Margin="10" Click="ClearDirectoriesButton_Click"/>
             <Button x:Name="ClearItemButton" Content="Clear Item Master" Width="150" Height="40" Margin="10" Click="ClearItemButton_Click"/>

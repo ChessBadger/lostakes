@@ -135,6 +135,7 @@ namespace lostakes
 
 
 
+
         private void CopyDirectory(string sourceDir, string destinationDir)
         {
             // Create the destination directory if it doesn't exist
@@ -223,7 +224,7 @@ namespace lostakes
                     File.Delete(file);
                 }
 
-                MessageBox.Show("All files in the directory have been deleted.");
+                MessageBox.Show("Files have been cleared!.");
             }
             catch (Exception ex)
             {
@@ -242,6 +243,86 @@ namespace lostakes
             // Close the current window
             Window.GetWindow(this).Close();
         }
+
+        private void RestoreButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Open a dialog for the user to select the zip file
+                OpenFileDialog openFileDialog = new OpenFileDialog
+                {
+                    Filter = "Zip Files (*.zip)|*.zip",
+                    Title = "Select the backup zip file"
+                };
+
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    string zipFilePath = openFileDialog.FileName;
+
+                    // Define the paths where the content should be extracted
+                    string extractPath = Path.Combine(Path.GetTempPath(), "WintakesRestore");
+                    string dataExtractPath = @"C:\Wintakes\Data";
+                    string backupExtractPath = @"C:\Wintakes\Backup";
+
+                    // Extract the zip file to a temporary directory
+                    ZipFile.ExtractToDirectory(zipFilePath, extractPath);
+
+                    // Check if the extracted folder contains 'Wintakes', 'Data', and 'Backup' directories
+                    string wintakesFolder = Path.Combine(extractPath, "Wintakes");
+                    string extractedDataFolder = Path.Combine(wintakesFolder, "Data");
+                    string extractedBackupFolder = Path.Combine(wintakesFolder, "Backup");
+
+                    if (!Directory.Exists(wintakesFolder) || !Directory.Exists(extractedDataFolder) || !Directory.Exists(extractedBackupFolder))
+                    {
+                        MessageBox.Show("The selected zip file is not correctly formatted. Please try another file.");
+                        return;
+                    }
+
+                    // Ensure the target directories exist
+                    if (!Directory.Exists(dataExtractPath))
+                    {
+                        Directory.CreateDirectory(dataExtractPath);
+                    }
+                    if (!Directory.Exists(backupExtractPath))
+                    {
+                        Directory.CreateDirectory(backupExtractPath);
+                    }
+
+                    // Clear the existing contents in the destination directories
+                    ClearDirectory(dataExtractPath);
+                    ClearDirectory(backupExtractPath);
+
+                    // Copy the extracted 'Data' folder contents to C:\Wintakes\Data
+                    CopyDirectory(extractedDataFolder, dataExtractPath);
+
+                    // Copy the extracted 'Backup' folder contents to C:\Wintakes\Backup
+                    CopyDirectory(extractedBackupFolder, backupExtractPath);
+
+                    // Cleanup the temporary extraction directory
+                    Directory.Delete(extractPath, true);
+
+                    MessageBox.Show("Restore completed successfully.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred during restore: {ex.Message}");
+            }
+        }
+
+        /// Helper method to clear all contents of a directory.
+        private void ClearDirectory(string directoryPath)
+        {
+            foreach (var file in Directory.GetFiles(directoryPath))
+            {
+                File.Delete(file);
+            }
+            foreach (var directory in Directory.GetDirectories(directoryPath))
+            {
+                Directory.Delete(directory, true);
+            }
+        }
+
 
     }
 }
