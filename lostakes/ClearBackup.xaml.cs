@@ -23,7 +23,11 @@ namespace lostakes
 
         private readonly string zipFilenameFile = @"C:\Lostakes Data\lastZipFilename.txt"; // Only the filename is persisted
 
-        private void BackupButton_Click(object sender, RoutedEventArgs e)
+        public void BackupButton_Click(object sender, RoutedEventArgs e)
+        {
+            RunBackup();
+        }
+        public void RunBackup()
         {
             try
             {
@@ -110,7 +114,7 @@ namespace lostakes
             // Clean up temporary directory
             Directory.Delete(tempDirectory, true);
 
-            MessageBox.Show($"Backup successful! Zip file created at: {zipFilePath}");
+            MessageBox.Show($"Backup successful!");
         }
 
 

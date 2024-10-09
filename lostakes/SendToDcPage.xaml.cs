@@ -141,7 +141,8 @@ namespace lostakes
             }
 
 
-            
+            ClearBackup clearBackupPage = new ClearBackup();
+            clearBackupPage.RunBackup();
         }
 
         private void DeleteNonDefaultFiles(string areaOutputDlfPath, string categoryOutputDlfPath, string locationOutputDlfPath)
