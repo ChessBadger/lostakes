@@ -52,14 +52,18 @@ namespace lostakes
 
             try
             {
-                // Process area.dbf to generate area_output.dlf
-                GenerateOutputDlfFromDbf(areaDbfPath, areaOutputDlfPath, 2, 21, "area");
+                if (Directory.Exists(areaDbfPath))
+                {
+                    // Process area.dbf to generate area_output.dlf
+                    GenerateOutputDlfFromDbf(areaDbfPath, areaOutputDlfPath, 2, 21, "area");
 
-                // Process category.dbf to generate category_output.dlf
-                GenerateOutputDlfFromDbf(categoryDbfPath, categoryOutputDlfPath, 2, 21, "category");
+                    // Process category.dbf to generate category_output.dlf
+                    GenerateOutputDlfFromDbf(categoryDbfPath, categoryOutputDlfPath, 2, 21, "category");
 
-                // Process location.dbf to generate location_output.dlf
-                GenerateOutputDlfFromDbf(locationDbfPath, locationOutputDlfPath, 3, 26, "location");
+                    // Process location.dbf to generate location_output.dlf
+                    GenerateOutputDlfFromDbf(locationDbfPath, locationOutputDlfPath, 3, 26, "location");
+                }
+              
 
                 // Ask the user to select a folder where the combined DLF files should be saved
                 using (var folderDialog = new FolderBrowserDialog())
@@ -70,17 +74,20 @@ namespace lostakes
                         // Get the selected folder path
                         string selectedFolder = folderDialog.SelectedPath;
 
-                        // Process and combine area.dlf
-                        CombineDlfFiles(areaDlfPath, areaOutputDlfPath, selectedFolder, "Area");
-                        CombineDlfFiles(areaDlfPath, areaOutputDlfPath, dataPath, "Area");
+                        if (Directory.Exists(areaDbfPath))
+                        {
+                            // Process and combine area.dlf
+                            CombineDlfFiles(areaDlfPath, areaOutputDlfPath, selectedFolder, "Area");
+                            CombineDlfFiles(areaDlfPath, areaOutputDlfPath, dataPath, "Area");
 
-                        // Process and combine category.dlf
-                        CombineDlfFiles(categoryDlfPath, categoryOutputDlfPath, selectedFolder, "Category");
-                        CombineDlfFiles(categoryDlfPath, categoryOutputDlfPath, dataPath, "Category");
+                            // Process and combine category.dlf
+                            CombineDlfFiles(categoryDlfPath, categoryOutputDlfPath, selectedFolder, "Category");
+                            CombineDlfFiles(categoryDlfPath, categoryOutputDlfPath, dataPath, "Category");
 
-                        // Process and combine location.dlf
-                        CombineDlfFiles(locationDlfPath, locationOutputDlfPath, selectedFolder, "Location");
-                        CombineDlfFiles(locationDlfPath, locationOutputDlfPath, dataPath, "Location");
+                            // Process and combine location.dlf
+                            CombineDlfFiles(locationDlfPath, locationOutputDlfPath, selectedFolder, "Location");
+                            CombineDlfFiles(locationDlfPath, locationOutputDlfPath, dataPath, "Location");
+                        }
 
                         // Process and combine HHConfig.dlf
                         CombineDlfFiles(hhConfigDlfPath, hhConfigDataDlfPath, selectedFolder, "HHConfig");
@@ -407,220 +414,6 @@ namespace lostakes
                 }
             }
         }
-
-
-        // Process itemast.dbf and generate OUTPUT.DLF
-        //    private void GenerateOutputDlfFromItemast(string itemastDbfPath, string outputDlfPath)
-        //    {
-        //        // Step 1: Read the DBF file and extract SKU and Price
-        //        List<Record> records = new List<Record>();
-        //        using (var dbfTable = new DbfTable(itemastDbfPath))
-        //        {
-        //            var dbfRecord = new DbfRecord(dbfTable);
-        //            while (dbfTable.Read(dbfRecord))
-        //            {
-        //                var skuValue = dbfRecord.Values[0];
-        //                var priceValue = dbfRecord.Values[10];
-
-        //                if (skuValue != null && priceValue != null)
-        //                {
-        //                    string sku = skuValue.ToString().Trim();
-        //                    string priceStr = priceValue.ToString();
-
-        //                    if (decimal.TryParse(priceStr, out decimal price))
-        //                    {
-        //                        records.Add(new Record { SKU = sku, Price = price });
-        //                    }
-        //                }
-        //            }
-        //        }
-
-        //        // Step 2: Sort records Z to A by SKU, without ignoring leading zeros, and with symbols after numbers but before letters
-        //        records = records.OrderByDescending(r => r.SKU, StringComparer.Ordinal).ToList();
-
-        //        // Step 3: Determine the maximum integer part length of the price
-        //        decimal maxPrice = records.Max(r => r.Price);
-        //        int maxIntegerPart = (int)Math.Floor(maxPrice); // Get the integer part of the max price
-        //        int maxIntegerDigits = maxIntegerPart.ToString().Length;
-
-        //        // Calculate the price length for the DLF (maxIntegerDigits + 4)
-        //        int priceLength = maxIntegerDigits + 4;
-
-        //        // Prepare the prices according to the new format
-        //        foreach (var record in records)
-        //        {
-        //            record.PriceString = GetPriceString(record.Price, maxIntegerDigits);
-        //        }
-
-        //        // Step 4: Prepare the DLF data
-        //        List<DlfRow> dlfRows = new List<DlfRow>();
-
-        //        // Determine how many special SKUs we need to add
-        //        int remainder = records.Count % 5;
-        //        int specialSkusToAdd = (remainder == 0) ? 0 : 5 - remainder;
-
-
-        //        // First row with special SKUs
-        //        if (records.Count >= 1)
-        //        {
-        //            DlfRow firstRow = new DlfRow();
-
-        //            MessageBox.Show("Records: " + records.Count + "\nRemainder: " + remainder);
-
-        //            if (remainder > 0)
-        //            {
-        //                string firstRowSKU = "99999999999999999";
-        //                firstRow.Col1 = PadSku(firstRowSKU);
-
-        //                // Add special SKUs if necessary
-        //                for (int i = 0; i < specialSkusToAdd - 1; i++)
-        //                {
-        //                    records.Insert(0, new Record { SKU = "99999999999999999", Price = 0, PriceString = GetPriceString(0, maxIntegerDigits) });
-        //                }
-
-        //                // Now create the first row using the first 5 records
-        //                if (records.Count >= 5)
-        //                {
-        //                    firstRow.Col2 = GetPriceString(0, maxIntegerDigits) + PadSku(records[0].SKU);
-        //                    firstRow.Col3 = records[0].PriceString + PadSku(records[1].SKU);
-        //                    firstRow.Col4 = records[1].PriceString + PadSku(records[2].SKU);
-        //                    firstRow.Col5 = records[2].PriceString + PadSku(records[3].SKU);
-        //                    firstRow.Col6 = records[3].PriceString;
-        //                }
-        //            }
-
-        //            else
-        //            {
-        //                firstRow.Col1 = PadSku(records[0].SKU);
-        //                firstRow.Col2 = records[0].PriceString + PadSku(records[1].SKU);
-        //                firstRow.Col3 = records[1].PriceString + PadSku(records[2].SKU);
-        //                firstRow.Col4 = records[2].PriceString + PadSku(records[3].SKU);
-        //                firstRow.Col5 = records[3].PriceString + PadSku(records[4].SKU);
-        //                firstRow.Col6 = records[4].PriceString;
-        //            }
-
-
-
-
-
-        //            dlfRows.Add(firstRow);
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("Not enough records to process.");
-        //            return;
-        //        }
-
-        //        // Step 5: Process remaining records in groups of 5
-        //        for (int i = 4; i < records.Count; i += 5)
-        //        {
-        //            DlfRow row = new DlfRow();
-        //            int remaining = records.Count - i;
-
-        //            // Col1
-        //            row.Col1 = PadSku(records[i].SKU);
-
-        //            // Col2
-        //            if (remaining >= 2)
-        //            {
-        //                string col2Value = records[i].PriceString + PadSku(records[i + 1].SKU);
-        //                row.Col2 = col2Value;
-        //            }
-        //            else if (remaining == 1)
-        //            {
-        //                row.Col2 = records[i].PriceString;
-        //            }
-
-        //            // Col3
-        //            if (remaining >= 3)
-        //            {
-        //                string col3Value = records[i + 1].PriceString + PadSku(records[i + 2].SKU);
-        //                row.Col3 = col3Value;
-        //            }
-        //            else if (remaining == 2)
-        //            {
-        //                row.Col3 = records[i + 1].PriceString;
-        //            }
-
-        //            // Col4
-        //            if (remaining >= 4)
-        //            {
-        //                string col4Value = records[i + 2].PriceString + PadSku(records[i + 3].SKU);
-        //                row.Col4 = col4Value;
-        //            }
-        //            else if (remaining == 3)
-        //            {
-        //                row.Col4 = records[i + 2].PriceString;
-        //            }
-
-        //            // Col5
-        //            if (remaining >= 5)
-        //            {
-        //                string col5Value = records[i + 3].PriceString + PadSku(records[i + 4].SKU);
-        //                row.Col5 = col5Value;
-        //            }
-        //            else if (remaining == 4)
-        //            {
-        //                row.Col5 = records[i + 3].PriceString;
-        //            }
-
-        //            // Col6
-        //            if (remaining >= 5)
-        //                row.Col6 = records[i + 4].PriceString;
-        //            else if (remaining == 4)
-        //                row.Col6 = records[i + 3].PriceString;
-        //            else if (remaining == 3)
-        //                row.Col6 = records[i + 2].PriceString;
-        //            else if (remaining == 2)
-        //                row.Col6 = records[i + 1].PriceString;
-        //            else if (remaining == 1)
-        //                row.Col6 = records[i].PriceString;
-        //            else
-        //                row.Col6 = "";
-
-        //            dlfRows.Add(row);
-        //        }
-
-        //        // Step 6: Sort DLF rows A to Z by SKU (Col1), excluding the first row
-        //        var sortedDlfRows = dlfRows.Skip(1).OrderBy(r => r.Col1.Trim()).ToList();
-
-        //        // Append the first row at the end
-        //        sortedDlfRows.Add(dlfRows[0]);
-
-        //        // Step 7: Write to DLF file
-
-        //        // Prepare the header lines with dynamic priceLength
-        //        List<string> headerLines = new List<string>
-        //{
-        //    "0,0,0",
-        //    "17,15,0",
-        //    $"{priceLength},14,0",
-        //    "17,15,0",
-        //    $"{priceLength},14,0",
-        //    "17,15,0",
-        //    $"{priceLength},14,0",
-        //    "17,15,0",
-        //    $"{priceLength},14,0",
-        //    "17,15,0",
-        //    $"{priceLength},14,0",
-        //    "0,0,0"
-        //};
-
-        //        using (StreamWriter writer = new StreamWriter(outputDlfPath))
-        //        {
-        //            // Write header lines
-        //            foreach (var line in headerLines)
-        //            {
-        //                writer.WriteLine(line);
-        //            }
-
-        //            // Write DLF data
-        //            foreach (var row in sortedDlfRows)
-        //            {
-        //                writer.WriteLine($"{row.Col1}{row.Col2}{row.Col3}{row.Col4}{row.Col5}{row.Col6}");
-        //            }
-        //        }
-        //    }
 
 
         // Helper method to format the price string
