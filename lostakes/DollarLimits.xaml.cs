@@ -56,10 +56,10 @@ namespace lostakes
                 CombinedLimit = fileContent.Substring(50, 9);  // Combined Limit from characters 51-59 (index 50-58)
 
                 // Populate the textboxes with the extracted values
-                EntryLimitTextbox.Text = EntryLimit.Replace("0", "");
-                PriceLimitTextbox.Text = PriceLimit.Replace("0", "");
-                QtyLimitTextbox.Text = QtyLimit.Replace("0", "");
-                CombinedLimitTextbox.Text = CombinedLimit.Replace("0", "");
+                EntryLimitTextbox.Text = EntryLimit.TrimStart('0');
+                PriceLimitTextbox.Text = PriceLimit.TrimStart('0');
+                QtyLimitTextbox.Text = QtyLimit.TrimStart('0');
+                CombinedLimitTextbox.Text = CombinedLimit.TrimStart('0');
             }
             catch (Exception ex)
             {

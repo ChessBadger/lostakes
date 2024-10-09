@@ -52,7 +52,7 @@ namespace lostakes
 
             try
             {
-                if (Directory.Exists(areaDbfPath))
+                if (File.Exists(areaDbfPath))
                 {
                     // Process area.dbf to generate area_output.dlf
                     GenerateOutputDlfFromDbf(areaDbfPath, areaOutputDlfPath, 2, 21, "area");
@@ -74,7 +74,7 @@ namespace lostakes
                         // Get the selected folder path
                         string selectedFolder = folderDialog.SelectedPath;
 
-                        if (Directory.Exists(areaDbfPath))
+                        if (File.Exists(areaDbfPath))
                         {
                             // Process and combine area.dlf
                             CombineDlfFiles(areaDlfPath, areaOutputDlfPath, selectedFolder, "Area");

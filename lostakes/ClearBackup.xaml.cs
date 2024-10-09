@@ -224,7 +224,7 @@ namespace lostakes
                     File.Delete(file);
                 }
 
-                MessageBox.Show("Files have been cleared!.");
+                MessageBox.Show("Files have been cleared!");
             }
             catch (Exception ex)
             {
@@ -298,6 +298,33 @@ namespace lostakes
                     // Copy the extracted 'Backup' folder contents to C:\Wintakes\Backup
                     CopyDirectory(extractedBackupFolder, backupExtractPath);
 
+                    // Now handle the HHConfig.dlf file
+                    string sourceHHConfigPath = Path.Combine(dataExtractPath, "HHConfig.dlf");
+                    string destinationHHConfigPath = @"C:\Lostakes Data\HHConfigData.dlf";
+
+                    if (File.Exists(sourceHHConfigPath))
+                    {
+                        // Read all lines from the HHConfig.dlf file
+                        string[] lines = File.ReadAllLines(sourceHHConfigPath);
+
+                        // Find the last non-empty line
+                        string lastNonEmptyLine = lines.Reverse().FirstOrDefault(line => !string.IsNullOrWhiteSpace(line));
+
+                        if (!string.IsNullOrEmpty(lastNonEmptyLine))
+                        {
+                            // Write the last non-empty line to HHConfigData.dlf, replacing the file's content
+                            File.WriteAllText(destinationHHConfigPath, lastNonEmptyLine);
+                        }
+                        else
+                        {
+                            MessageBox.Show("HHConfig.dlf file contains only empty lines.");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("HHConfig.dlf file not found in the extracted Data folder.");
+                    }
+
                     // Cleanup the temporary extraction directory
                     Directory.Delete(extractPath, true);
 
@@ -309,6 +336,9 @@ namespace lostakes
                 MessageBox.Show($"An error occurred during restore: {ex.Message}");
             }
         }
+
+
+
 
         /// Helper method to clear all contents of a directory.
         private void ClearDirectory(string directoryPath)
