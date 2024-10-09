@@ -44,6 +44,7 @@ namespace lostakes
             string areaOutputDlfPath = @"C:\Lostakes Data\area_output.dlf";
             string categoryOutputDlfPath = @"C:\Lostakes Data\category_output.dlf";
             string locationOutputDlfPath = @"C:\Lostakes Data\location_output.dlf";
+            string dataPath = @"C:\Wintakes\Data";
 
             // Paths of the files to copy as-is
             string lostakesDataPath = @"C:\Lostakes Data";
@@ -71,15 +72,19 @@ namespace lostakes
 
                         // Process and combine area.dlf
                         CombineDlfFiles(areaDlfPath, areaOutputDlfPath, selectedFolder, "Area");
+                        CombineDlfFiles(areaDlfPath, areaOutputDlfPath, dataPath, "Area");
 
                         // Process and combine category.dlf
                         CombineDlfFiles(categoryDlfPath, categoryOutputDlfPath, selectedFolder, "Category");
+                        CombineDlfFiles(categoryDlfPath, categoryOutputDlfPath, dataPath, "Category");
 
                         // Process and combine location.dlf
                         CombineDlfFiles(locationDlfPath, locationOutputDlfPath, selectedFolder, "Location");
+                        CombineDlfFiles(locationDlfPath, locationOutputDlfPath, dataPath, "Location");
 
                         // Process and combine HHConfig.dlf
                         CombineDlfFiles(hhConfigDlfPath, hhConfigDataDlfPath, selectedFolder, "HHConfig");
+                        CombineDlfFiles(hhConfigDlfPath, hhConfigDataDlfPath, dataPath, "HHConfig");
 
                         // Copy the specified files from C:\Lostakes Data to the selected folder
                         foreach (var fileName in filesToCopy)
@@ -111,8 +116,10 @@ namespace lostakes
                         {
                             // Now process itemast.dbf and generate output.dlf
                             string outputDlfPath = Path.Combine(selectedFolder, "SKUFILE.DLF");
+                            string outputDataPath = Path.Combine(dataPath, "SKUFILE.DLF");
                             // Process itemast.dbf to generate SKUFILE.DLF
                             GenerateOutputDlfFromItemast(itemastDbfPath, outputDlfPath);
+                            GenerateOutputDlfFromItemast(itemastDbfPath, outputDataPath);
                         }
 
                         // Notify the user that the process is complete
