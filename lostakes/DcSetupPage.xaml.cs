@@ -17,13 +17,30 @@ namespace lostakes
         private string combinedLimit = "000000000";
         private SymbologyData symbologyData;
         private LaserGunOrWandData laserGunOrWandData;
+        public class DcSetupConfig
+        {
+            public bool IsCostPriceUsed { get; set; }
+        }
+
+        public DcSetupConfig SetupConfig { get; set; }
 
 
         public DcSetupPage()
         {
             InitializeComponent();
             LoadSettings();
+            SetupConfig.IsCostPriceUsed = false; // Default value
 
+        }
+
+        private void UseCostPriceCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            SetupConfig.IsCostPriceUsed = true; // Set the value when checked
+        }
+
+        private void UseCostPriceCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SetupConfig.IsCostPriceUsed = false; // Set the value when unchecked
         }
 
         // Enable or disable dependent checkboxes when "Lookup SKUs" is checked
@@ -116,8 +133,8 @@ namespace lostakes
                 }
             }
 
-            // Navigate back to the Send to DC page
-            NavigationService?.Navigate(new SendToDcPage());
+            SendToDcPage sendToDcPage = new SendToDcPage(SetupConfig);
+            NavigationService.Navigate(sendToDcPage);
         }
 
         private void CreateHHConfigDataFile()
