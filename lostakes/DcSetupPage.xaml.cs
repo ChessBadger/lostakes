@@ -510,9 +510,24 @@ namespace lostakes
 
         private void LoadSettings()
         {
-            // Call this method when loading the file, for example when the user clicks a "Load" button
+            // Load the Use Cost Price state from the file
+            if (File.Exists(filePath))
+            {
+                try
+                {
+                    string useCostPriceState = File.ReadAllText(filePath);
+                    UseCostPriceCheckbox.IsChecked = bool.Parse(useCostPriceState);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error loading Use Cost Price state: {ex.Message}");
+                }
+            }
+
+            // Load other settings from HHConfigData.dlf file
             LoadConfigFromFile(@"C:\\Lostakes Data\\HHConfigData.dlf");
         }
+
 
         private void InventoryTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
