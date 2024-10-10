@@ -77,8 +77,17 @@ namespace lostakes
             {
                 // Set the text in the SearchTextBox to the selected account
                 SearchTextBox.Text = AccountsListBox.SelectedItem.ToString();
+
+                // Enable the 'Delete' button
+                DeleteButton.IsEnabled = true;
+            }
+            else
+            {
+                // Disable the 'Delete' button if no account is selected
+                DeleteButton.IsEnabled = false;
             }
         }
+
 
         private void NewButton_Click(object sender, RoutedEventArgs e)
         {
@@ -131,6 +140,53 @@ namespace lostakes
             // Navigate back to the previous page when 'Cancel' is clicked
             NavigationService.GoBack();
         }
+
+        // Event handler for the 'Delete' button click
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (AccountsListBox.SelectedItem != null)
+            {
+                string selectedAccount = AccountsListBox.SelectedItem.ToString();
+                string accountsFolderPath = @"C:\Lostakes Data\Accounts";
+                string selectedAccountFilePath = Path.Combine(accountsFolderPath, $"{selectedAccount}_HHConfigData.dlf");
+
+                MessageBoxResult result = MessageBox.Show($"Are you sure you want to delete the account '{selectedAccount}'?",
+                                                          "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        // Check if the file exists
+                        if (File.Exists(selectedAccountFilePath))
+                        {
+                            // Delete the file
+                            File.Delete(selectedAccountFilePath);
+
+                            // Remove the account from the list and refresh the ListBox
+                            allAccounts.Remove(selectedAccount);
+                            AccountsListBox.ItemsSource = null;
+                            AccountsListBox.ItemsSource = allAccounts;
+
+                            MessageBox.Show($"Account '{selectedAccount}' has been deleted.");
+                        }
+                        else
+                        {
+                            MessageBox.Show($"The file for the selected account '{selectedAccount}' does not exist.");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle any exceptions
+                        MessageBox.Show($"An error occurred while deleting the account: {ex.Message}");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select an account first.");
+            }
+        }
+
 
 
     }

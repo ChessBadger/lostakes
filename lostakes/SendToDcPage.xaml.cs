@@ -14,12 +14,10 @@ namespace lostakes
     public partial class SendToDcPage : Page
     {
 
-        private DcSetupPage.DcSetupConfig _setupConfig;
 
-        public SendToDcPage(DcSetupPage.DcSetupConfig setupConfig)
+        public SendToDcPage()
         {
             InitializeComponent();
-            _setupConfig = setupConfig; // Store the passed config object
 
         }
 
@@ -298,8 +296,6 @@ namespace lostakes
 
         private void GenerateOutputDlfFromItemast(string itemastDbfPath, string outputDlfPath)
         {
-            // Use the shared IsCostPriceUsed value
-            bool isCostPriceUsed = _setupConfig.IsCostPriceUsed;
 
             // Step 1: Read the DBF file and extract SKU and Price
             List<Record> records = new List<Record>();
@@ -309,7 +305,7 @@ namespace lostakes
                 while (dbfTable.Read(dbfRecord))
                 {
                     var skuValue = dbfRecord.Values[0];
-                    var priceValue = isCostPriceUsed ? dbfRecord.Values[9] : dbfRecord.Values[10];
+                    var priceValue =  dbfRecord.Values[10];
 
                     if (skuValue != null && priceValue != null)
                     {
