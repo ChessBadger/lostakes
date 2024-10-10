@@ -9,7 +9,7 @@
     <Grid>
         <TextBlock Text="Enter an account name to save the current settings:" Margin="10"/>
         <TextBox x:Name="AccountNameTextBox" Margin="10,0,10,10" Height="25"/>
-        <Button Content="Save" HorizontalAlignment="Right" Margin="10" VerticalAlignment="Bottom" Width="75" Click="SaveButton_Click"/>
-        <Button Content="Don't Save" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Bottom" Width="75" Click="CancelButton_Click"/>
+        <Button Content="Save" HorizontalAlignment="Right" Margin="10" VerticalAlignment="Bottom" Height="25" Width="75" Click="SaveButton_Click"/>
+        <Button Content="Don't Save" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Bottom" Height="25" Width="85" Click="CancelButton_Click"/>
     </Grid>
 </Window>

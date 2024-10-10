@@ -5,22 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:lostakes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        WindowStartupLocation="Manual"
+        Left="0" Top="0"
+        Style="{StaticResource {x:Type Window}}">
     <Grid>
+
         <!-- Frame for navigation between pages -->
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden">
             <Frame.Content>
-                <!-- StackPanel for organizing buttons -->
+                <!-- StackPanel for organizing content -->
                 <StackPanel x:Name="MainStackPanel" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <!-- Button to send to DC -->
+
+                    <!-- Place the Image here -->
+                    <Image Source="Images/H-Badger main.png" Width="230" Height="70" Stretch="Fill" Margin="0,0,0,50" HorizontalAlignment="Center"/>
+
+                    <!-- Buttons -->
                     <Button x:Name="SendToDcButton" Content="Send to DC" Width="150" Height="40" Margin="10" Click="SendToDcButton_Click"/>
-
-                    <!-- Button to receive from DC -->
                     <Button x:Name="ReceiveFromDcButton" Content="Receive from DC" Width="150" Height="40" Margin="10" Click="ReceiveFromDcButton_Click"/>
-
-
                     <Button x:Name="ClearBackupButton" Content="Finalize" Width="150" Height="40" Margin="10" Click="ClearBackupButton_Click"/>
-
                 </StackPanel>
             </Frame.Content>
         </Frame>

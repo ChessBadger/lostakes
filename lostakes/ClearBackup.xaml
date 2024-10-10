@@ -8,28 +8,36 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ClearBackup">
 
-    <Grid Background="LightGray">
-        <!-- Define two columns: left and right -->
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+    <!-- DockPanel to position the image at the top and the buttons below -->
+    <DockPanel LastChildFill="True">
+        <!-- Top Image -->
+        <Image Source="Images/H-Badger main.png" Width="230" Height="70" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Top" DockPanel.Dock="Top" Margin="10"/>
 
-        <!-- StackPanel for left column (Backup, Restore, Clear Everything) -->
-        <StackPanel x:Name="LeftStackPanel" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0">
-            <Button x:Name="BackupButton" Content="Backup Everything" Width="150" Height="40" Margin="10" Click="BackupButton_Click"/>
-            <Button x:Name="RestoreButton" Content="Restore Everything" Width="150" Height="40" Margin="10" Click="RestoreButton_Click" />
-            <Button x:Name="ClearEverythingButton" Content="Clear Everything" Width="150" Height="40" Margin="10" Click="ClearEverythingButton_Click"/>
-        </StackPanel>
+        <!-- Grid for buttons below the image -->
+        <Grid DockPanel.Dock="Bottom" Margin="0">
+            <!-- Define two columns: left and right -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-        <!-- StackPanel for right column (Clear Uploads, Clear Directories, Clear Item Master) -->
-        <StackPanel x:Name="RightStackPanel" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0">
-            <Button x:Name="ClearUploadsButton" Content="Clear Uploads" Width="150" Height="40" Margin="10" Click="ClearUploadsButton_Click"/>
-            <Button x:Name="ClearDirectoriesButton" Content="Clear Directories" Width="150" Height="40" Margin="10" Click="ClearDirectoriesButton_Click"/>
-            <Button x:Name="ClearItemButton" Content="Clear Item Master" Width="150" Height="40" Margin="10" Click="ClearItemButton_Click"/>
-        </StackPanel>
+            <!-- StackPanel for left column (Backup, Restore, Clear Everything) -->
+            <StackPanel x:Name="LeftStackPanel" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="210,0,0,0" Height="270">
+                <Button x:Name="BackupButton" Content="Backup Everything" Width="150" Height="40" Margin="10" Click="BackupButton_Click"/>
+                <Button x:Name="RestoreButton" Content="Restore Everything" Width="150" Height="40" Margin="10" Click="RestoreButton_Click" />
+                <Button x:Name="ClearEverythingButton" Content="Clear Everything" Width="150" Height="40" Margin="10" Click="ClearEverythingButton_Click"/>
+            </StackPanel>
 
-        <!-- Back button positioned in the lower-left corner -->
-        <Button x:Name="BackButton" Content="Back to Main Menu" Width="150" Height="40" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" Click="BackButton_Click"/>
-    </Grid>
+            <!-- StackPanel for right column (Clear Uploads, Clear Directories, Clear Item Master) -->
+            <StackPanel x:Name="RightStackPanel" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Height="270">
+                <Button x:Name="ClearUploadsButton" Content="Clear Uploads" Width="150" Height="40" Margin="10" Click="ClearUploadsButton_Click"/>
+                <Button x:Name="ClearDirectoriesButton" Content="Clear Directories" Width="150" Height="40" Margin="10" Click="ClearDirectoriesButton_Click"/>
+                <Button x:Name="ClearItemButton" Content="Clear Item Master" Width="150" Height="40" Margin="10" Click="ClearItemButton_Click"/>
+            </StackPanel>
+
+            <!-- Back button positioned in the lower-left corner -->
+            <Button x:Name="BackButton" Content="Back to Main Menu" Width="150" Height="40" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" Click="BackButton_Click"/>
+        </Grid>
+
+    </DockPanel>
 </Page>
