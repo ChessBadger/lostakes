@@ -45,6 +45,8 @@
             <StackPanel>
                 <CheckBox x:Name="DoubleKeyPriceCheckbox" Content="Double Key Price" Margin="5"/>
                 <CheckBox x:Name="UseQuantityConstantCheckbox" Content="Use Quantity Constant" Margin="5"/>
+                <CheckBox x:Name="UseCostPriceCheckbox" Content="Use Cost Price" Margin="5"
+          Checked="UseCostPriceCheckbox_Checked" Unchecked="UseCostPriceCheckbox_Unchecked"/>
             </StackPanel>
         </GroupBox>
 

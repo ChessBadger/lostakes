@@ -296,6 +296,18 @@ namespace lostakes
 
         private void GenerateOutputDlfFromItemast(string itemastDbfPath, string outputDlfPath)
         {
+            // Determine if "Use Cost Price" is true
+            string useCostPricePath = @"C:\Lostakes Data\UseCostPrice.txt";
+            bool useCostPrice = false;
+
+            // Check if the file exists and read the stored value
+            if (File.Exists(useCostPricePath))
+            {
+                string content = File.ReadAllText(useCostPricePath);
+                bool.TryParse(content, out useCostPrice);
+            }
+
+            int priceIndex = useCostPrice ? 9 : 10;  // Index 9 for cost price, 10 for regular price
 
             // Step 1: Read the DBF file and extract SKU and Price
             List<Record> records = new List<Record>();
@@ -305,7 +317,7 @@ namespace lostakes
                 while (dbfTable.Read(dbfRecord))
                 {
                     var skuValue = dbfRecord.Values[0];
-                    var priceValue =  dbfRecord.Values[10];
+                    var priceValue = dbfRecord.Values[priceIndex];  // Use dynamic index
 
                     if (skuValue != null && priceValue != null)
                     {

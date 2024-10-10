@@ -17,6 +17,8 @@ namespace lostakes
         private string combinedLimit = "000000000";
         private SymbologyData symbologyData;
         private LaserGunOrWandData laserGunOrWandData;
+        private const string filePath = @"C:\Lostakes Data\UseCostPrice.txt";
+
 
 
         public DcSetupPage()
@@ -26,6 +28,35 @@ namespace lostakes
 
         }
 
+        private void UseCostPriceCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            SaveUseCostPriceState(true);
+        }
+
+        private void UseCostPriceCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SaveUseCostPriceState(false);
+        }
+
+        private void SaveUseCostPriceState(bool isChecked)
+        {
+            try
+            {
+                // Ensure the directory exists
+                string directoryPath = Path.GetDirectoryName(filePath);
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+
+                // Write the checkbox state to the file
+                File.WriteAllText(filePath, isChecked.ToString());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error saving Use Cost Price state: {ex.Message}");
+            }
+        }
 
         // Enable or disable dependent checkboxes when "Lookup SKUs" is checked
         private void LookupSkus_Checked(object sender, RoutedEventArgs e)
