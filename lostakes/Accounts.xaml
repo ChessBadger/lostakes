@@ -45,17 +45,17 @@
 
 <!-- 'New' button -->
 <Button Grid.Row="2" Grid.Column="1" Margin="0,20,0,20" Height="40" Width="100" 
-        HorizontalAlignment="Center" VerticalAlignment="Bottom" Content="New" 
+        HorizontalAlignment="Center" VerticalAlignment="Bottom" Content="New Account" 
         Click="NewButton_Click"/>
 
 <!-- 'Delete' button -->
 <Button x:Name="DeleteButton" Grid.Row="0" Grid.Column="3" Margin="0,0,10,20" Height="30" Width="100" 
-        HorizontalAlignment="Right" VerticalAlignment="Top" Content="Delete" 
+        HorizontalAlignment="Right" VerticalAlignment="Top" Content="Delete Account" 
         Click="DeleteButton_Click" IsEnabled="False"/>
 
 <!-- 'Continue' button -->
 <Button Grid.Row="2" Grid.Column="3" Margin="0,20,10,20" Height="40" Width="100" 
-        HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="Continue" 
+        HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="Apply" 
         Click="ContinueButton_Click"/>
 
         
