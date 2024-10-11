@@ -97,7 +97,6 @@ namespace lostakes
 
         private void ContinueButton_Click(object sender, RoutedEventArgs e)
         {
-            // Check if an account is selected
             if (AccountsListBox.SelectedItem != null)
             {
                 string selectedAccount = AccountsListBox.SelectedItem.ToString();
@@ -107,25 +106,23 @@ namespace lostakes
 
                 try
                 {
-                    // Check if the selected account file exists
-                    if (File.Exists(selectedAccountFilePath))
-                    {
-                        // Overwrite the HHConfigData.dlf file with the selected account's file content
-                        File.Copy(selectedAccountFilePath, destinationFilePath, overwrite: true);
+                    // Copy the selected account file
+                    File.Copy(selectedAccountFilePath, destinationFilePath, overwrite: true);
 
-                        MessageBox.Show($"Account '{selectedAccount}' has been applied successfully.");
+                    // Copy the "Use Cost Price" state for the selected account
+                    string useCostPriceSourcePath = Path.Combine(accountsFolderPath, $"{selectedAccount}_UseCostPrice.txt");
+                    string useCostPriceDestinationPath = @"C:\Lostakes Data\UseCostPrice.txt";
 
-                        // Navigate back to the previous page (assuming it's the main window or another page)
-                        NavigationService.GoBack(); // or NavigationService.Navigate(new PreviousPage());
-                    }
-                    else
+                    if (File.Exists(useCostPriceSourcePath))
                     {
-                        MessageBox.Show($"The file for the selected account '{selectedAccount}' does not exist.");
+                        File.Copy(useCostPriceSourcePath, useCostPriceDestinationPath, overwrite: true);
                     }
+
+                    MessageBox.Show($"Account '{selectedAccount}' has been applied successfully.");
+                    NavigationService.GoBack();
                 }
                 catch (Exception ex)
                 {
-                    // Handle any exceptions
                     MessageBox.Show($"An error occurred while applying the account: {ex.Message}");
                 }
             }

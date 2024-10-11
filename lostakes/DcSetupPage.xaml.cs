@@ -127,7 +127,7 @@ namespace lostakes
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            // Create the HHConfigData.dlf file
+            // Create the HHConfigData.dlf file as usual
             CreateHHConfigDataFile();
 
             // Open the modal dialog for account name
@@ -139,18 +139,24 @@ namespace lostakes
 
                 if (!string.IsNullOrEmpty(accountName))
                 {
-                    // Define the source and destination paths
+                    // Define the source and destination paths for the config file
                     string sourceFilePath = @"C:\Lostakes Data\HHConfigData.dlf";
                     string destinationFilePath = $@"C:\Lostakes Data\Accounts\{accountName}_HHConfigData.dlf";
 
                     // Copy the file with the account name prepended
                     File.Copy(sourceFilePath, destinationFilePath, overwrite: true);
+
+                    // Save the "Use Cost Price" state in a separate file
+                    string useCostPriceFilePath = $@"C:\Lostakes Data\Accounts\{accountName}_UseCostPrice.txt";
+                    File.WriteAllText(useCostPriceFilePath, UseCostPriceCheckbox.IsChecked.ToString());
                 }
             }
 
+            // Navigate to the next page
             SendToDcPage sendToDcPage = new SendToDcPage();
             NavigationService.Navigate(sendToDcPage);
         }
+
 
         private void CreateHHConfigDataFile()
         {
@@ -430,6 +436,23 @@ namespace lostakes
 
         private void LoadConfigFromFile(string filePath)
         {
+            // Now load the "Use Cost Price" state from the corresponding text file
+            string accountName = Path.GetFileNameWithoutExtension(filePath).Replace("_HHConfigData", "");
+            string useCostPriceFilePath = $@"C:\Lostakes Data\Accounts\{accountName}_UseCostPrice.txt";
+
+            if (File.Exists(useCostPriceFilePath))
+            {
+                try
+                {
+                    string useCostPriceState = File.ReadAllText(useCostPriceFilePath);
+                    UseCostPriceCheckbox.IsChecked = bool.Parse(useCostPriceState);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error loading Use Cost Price state: {ex.Message}");
+                }
+            }
+
             if (!File.Exists(filePath)) return;
 
             // Read the content from the file
