@@ -570,7 +570,24 @@ namespace lostakes
             else
             {
                 // Enable all options in the SKU Options groupbox
-                SetSkuOptionsEnabled(true);
+                //SetSkuOptionsEnabled(true);
+                NumericSkuOnlyCheckbox.IsEnabled = true;
+                RestrictSkuLengthCheckbox.IsEnabled = true;
+                SetSkuLengthTextbox.IsEnabled = true && RestrictSkuLengthCheckbox.IsChecked == true;
+                ChooseSymbologiesCheckbox.IsEnabled = true;
+                ChooseCheckDigitComboBox.IsEnabled = true;
+                ScanSkuTwiceCheckbox.IsEnabled = true;
+                ChooseLaserGunOrWandCheckbox.IsEnabled = true;
+                UseSingleSkuCheckbox.IsEnabled = true;
+                UseSkuConsolidationCheckbox.IsEnabled = true;
+                BlockFinancialsCheckbox.IsEnabled = true;
+                LookupSkusCheckbox.IsEnabled = true;
+                ExpandUpc6Checkbox.IsEnabled = true;
+                LookupPricesCheckbox.IsEnabled = true;
+                AllowNotFoundCheckbox.IsEnabled = true;
+                SkipFoundPricesCheckbox.IsEnabled = true;
+                KeySkuTwiceCheckbox.IsEnabled = true;
+
             }
   
         }
