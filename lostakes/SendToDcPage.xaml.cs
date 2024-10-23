@@ -14,11 +14,40 @@ namespace lostakes
     public partial class SendToDcPage : Page
     {
 
+        private const string chosenAccountFilePath = @"C:\Lostakes Data\ChosenAccount.txt"; // File where chosen account is stored
 
         public SendToDcPage()
         {
             InitializeComponent();
+            LoadChosenAccount();
 
+
+        }
+
+        private void LoadChosenAccount()
+        {
+            // Check if the chosen account file exists
+            if (File.Exists(chosenAccountFilePath))
+            {
+                try
+                {
+                    // Read the chosen account name from the file
+                    string chosenAccountName = File.ReadAllText(chosenAccountFilePath);
+
+                    // Set the TextBlock to display the chosen account name
+                    AccountNameTextBlock.Text = $"Account: {chosenAccountName}";
+                }
+                catch (Exception ex)
+                {
+                    // Handle any errors that occur while reading the file
+                    MessageBox.Show($"Error loading chosen account: {ex.Message}");
+                }
+            }
+            else
+            {
+                // If no account is selected, show a default message
+                AccountNameTextBlock.Text = "No account selected";
+            }
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)

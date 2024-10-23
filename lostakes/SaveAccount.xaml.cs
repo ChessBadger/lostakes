@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,11 @@ namespace lostakes
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             AccountName = AccountNameTextBox.Text;
+            string chosenAccountFilePath = @"C:\Lostakes Data\ChosenAccount.txt";  // Path to store the chosen account
+
+            // Save the chosen account name to the ChosenAccount.txt file
+            File.WriteAllText(chosenAccountFilePath, AccountName);
+
             DialogResult = true;
             this.Close();
         }

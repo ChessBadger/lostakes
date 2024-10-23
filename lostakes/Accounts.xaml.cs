@@ -103,6 +103,7 @@ namespace lostakes
                 string accountsFolderPath = @"C:\Lostakes Data\Accounts";
                 string selectedAccountFilePath = Path.Combine(accountsFolderPath, $"{selectedAccount}_HHConfigData.dlf");
                 string destinationFilePath = @"C:\Lostakes Data\HHConfigData.dlf";
+                string chosenAccountFilePath = @"C:\Lostakes Data\ChosenAccount.txt";  // Path to store the chosen account
 
                 try
                 {
@@ -118,8 +119,11 @@ namespace lostakes
                         File.Copy(useCostPriceSourcePath, useCostPriceDestinationPath, overwrite: true);
                     }
 
+                    // Save the chosen account name to the ChosenAccount.txt file
+                    File.WriteAllText(chosenAccountFilePath, selectedAccount);
+
                     MessageBox.Show($"Account '{selectedAccount}' has been applied successfully.");
-                    NavigationService.GoBack();
+                    NavigationService.Navigate(new SendToDcPage());
                 }
                 catch (Exception ex)
                 {
@@ -131,6 +135,7 @@ namespace lostakes
                 MessageBox.Show("Please select an account first.");
             }
         }
+
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
