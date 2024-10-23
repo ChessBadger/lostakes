@@ -164,7 +164,7 @@ namespace lostakes
                 BackupBeforeClear();
                 try
                 {
-                    var files = Directory.GetFiles(directoryPath, "*upload*");
+                    var files = Directory.GetFiles(directoryPath, "*UPLD*");
                     foreach (var file in files)
                     {
                         File.Delete(file);
