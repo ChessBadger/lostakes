@@ -14,12 +14,12 @@ namespace lostakes
     public partial class ClearBackup : Page
     {
         private readonly string directoryPath = @"C:\Wintakes\Data";
+        private readonly string backupPath = @"C:\Wintakes\Backup";
 
         public ClearBackup()
         {
             InitializeComponent();
         }
-
 
         private readonly string zipFilenameFile = @"C:\Lostakes Data\lastZipFilename.txt"; // Only the filename is persisted
 
@@ -27,6 +27,7 @@ namespace lostakes
         {
             RunBackup();
         }
+
         public void RunBackup()
         {
             try
@@ -117,7 +118,6 @@ namespace lostakes
             MessageBox.Show($"Backup successful!");
         }
 
-
         /// Helper method to save the last used zip file name to a text file.
         private void SaveLastZipFilename(string zipFilename)
         {
@@ -132,9 +132,6 @@ namespace lostakes
             }
             return null;
         }
-
-
-
 
         private void CopyDirectory(string sourceDir, string destinationDir)
         {
@@ -158,77 +155,121 @@ namespace lostakes
 
         private void ClearUploadsButton_Click(object sender, RoutedEventArgs e)
         {
-            try
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to clear all upload files?",
+                                                      "Confirmation",
+                                                      MessageBoxButton.YesNo,
+                                                      MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
             {
-                var files = Directory.GetFiles(directoryPath, "*upload*");
-                foreach (var file in files)
+                BackupBeforeClear();
+                try
                 {
-                    File.Delete(file);
+                    var files = Directory.GetFiles(directoryPath, "*upload*");
+                    foreach (var file in files)
+                    {
+                        File.Delete(file);
+                    }
+                    MessageBox.Show("All upload files have been deleted.");
                 }
-                MessageBox.Show("All upload files have been deleted.");
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred: {ex.Message}");
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"An error occurred: {ex.Message}");
+                MessageBox.Show("Operation canceled.");
             }
         }
 
         private void ClearDirectoriesButton_Click(object sender, RoutedEventArgs e)
         {
-            try
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to clear selected directory files?",
+                                                      "Confirmation",
+                                                      MessageBoxButton.YesNo,
+                                                      MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
             {
-                string[] dbfFiles = { "area.dbf", "location.dbf", "category.dbf" };
-                foreach (string dbfFile in dbfFiles)
+                BackupBeforeClear();
+                try
                 {
-                    string filePath = Path.Combine(directoryPath, dbfFile);
-                    if (File.Exists(filePath))
+                    string[] dbfFiles = { "area.dbf", "location.dbf", "category.dbf" };
+                    foreach (string dbfFile in dbfFiles)
                     {
-                        File.Delete(filePath);
+                        string filePath = Path.Combine(directoryPath, dbfFile);
+                        if (File.Exists(filePath))
+                        {
+                            File.Delete(filePath);
+                        }
                     }
+                    MessageBox.Show("Selected directory files have been deleted.");
                 }
-                MessageBox.Show("Selected directory files have been deleted.");
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred: {ex.Message}");
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"An error occurred: {ex.Message}");
+                MessageBox.Show("Operation canceled.");
             }
         }
 
         private void ClearItemButton_Click(object sender, RoutedEventArgs e)
         {
-            try
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to clear the item master file?",
+                                                      "Confirmation",
+                                                      MessageBoxButton.YesNo,
+                                                      MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
             {
-                string itemFile = Path.Combine(directoryPath, "itemast.dbf");
-                if (File.Exists(itemFile))
+                BackupBeforeClear();
+                try
                 {
-                    File.Delete(itemFile);
+                    string itemFile = Path.Combine(directoryPath, "itemast.dbf");
+                    if (File.Exists(itemFile))
+                    {
+                        File.Delete(itemFile);
+                    }
+                    MessageBox.Show("Item master file has been deleted.");
                 }
-                MessageBox.Show("Item master file has been deleted.");
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred: {ex.Message}");
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"An error occurred: {ex.Message}");
+                MessageBox.Show("Operation canceled.");
             }
         }
 
         private void ClearEverythingButton_Click(object sender, RoutedEventArgs e)
         {
-            try
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to clear all files?",
+                                                      "Confirmation",
+                                                      MessageBoxButton.YesNo,
+                                                      MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
             {
-                // Get all files in the directory
-                var files = Directory.GetFiles(directoryPath);
-
-                // Delete each file
-                foreach (var file in files)
+                BackupBeforeClear();
+                try
                 {
-                    File.Delete(file);
+                    var files = Directory.GetFiles(directoryPath);
+                    foreach (var file in files)
+                    {
+                        File.Delete(file);
+                    }
+                    MessageBox.Show("Files have been cleared!");
                 }
-
-                MessageBox.Show("Files have been cleared!");
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred: {ex.Message}");
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"An error occurred: {ex.Message}");
+                MessageBox.Show("Operation canceled.");
             }
         }
 
@@ -337,9 +378,6 @@ namespace lostakes
             }
         }
 
-
-
-
         /// Helper method to clear all contents of a directory.
         private void ClearDirectory(string directoryPath)
         {
@@ -353,6 +391,60 @@ namespace lostakes
             }
         }
 
+        /// Backup current data before clearing.
+        private void BackupBeforeClear()
+        {
+            // Clear the backup directory first
+            ClearDirectory(backupPath);
+
+            // Copy everything from the data directory to the backup directory
+            CopyDirectory(directoryPath, backupPath);
+        }
+
+        private void RestoreBackupButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Warn the user that this will clear their current data
+            MessageBoxResult result = MessageBox.Show(
+                "This will clear all your current data. Are you sure you want to proceed?",
+                "Warning: Restore Data",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    // Ensure the backup directory exists
+                    if (!Directory.Exists(backupPath))
+                    {
+                        MessageBox.Show("Backup folder not found. Unable to restore data.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    // Ensure the data directory exists (create it if not)
+                    if (!Directory.Exists(directoryPath))
+                    {
+                        Directory.CreateDirectory(directoryPath);
+                    }
+
+                    // Clear the data directory
+                    ClearDirectory(directoryPath);
+
+                    // Copy the content from Backup to Data
+                    CopyDirectory(backupPath, directoryPath);
+
+                    MessageBox.Show("Data successfully restored.", "Restore Complete", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred during restore: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Restore canceled.", "Cancel", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
 
     }
 }

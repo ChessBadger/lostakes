@@ -12,6 +12,7 @@
     <DockPanel LastChildFill="True">
         <!-- Top Image -->
         <Image Source="Images/H-Badger main.png" Width="230" Height="70" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Top" DockPanel.Dock="Top" Margin="10"/>
+        
 
         <!-- Grid for buttons below the image -->
         <Grid DockPanel.Dock="Bottom" Margin="0">
@@ -34,6 +35,8 @@
                 <Button x:Name="ClearDirectoriesButton" Content="Clear Directories" Width="150" Height="40" Margin="10" Click="ClearDirectoriesButton_Click"/>
                 <Button x:Name="ClearItemButton" Content="Clear Item Master" Width="150" Height="40" Margin="10" Click="ClearItemButton_Click"/>
             </StackPanel>
+
+            <Button x:Name="RestoreBackupButton" Grid.Column="1" Content="Restore Cleared Data" Width="170" Height="40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Click="RestoreBackupButton_Click"/>
 
             <!-- Back button positioned in the lower-left corner -->
             <Button x:Name="BackButton" Content="&lt;&lt;Back" Width="100" Height="40" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" Click="BackButton_Click"/>
