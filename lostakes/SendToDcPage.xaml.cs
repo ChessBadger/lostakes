@@ -57,6 +57,51 @@ namespace lostakes
             Window.GetWindow(this).Close();
         }
 
+        private void CategoriesCardsButton_Click(object sender, RoutedEventArgs e )
+        {
+            string sourcePath = @"C:\Lostakes Data";
+            string destinationPath = @"C:\Wintakes\Data";
+
+            // Ensure the destination directory exists
+            Directory.CreateDirectory(destinationPath);
+
+            // Define the files to look for
+            string[] fileNames = { "Generic_area.dbf", "Generic_location.dbf" };
+
+            try
+            {
+                foreach (string fileName in fileNames)
+                {
+                    string sourceFile = Path.Combine(sourcePath, fileName);
+
+                    if (File.Exists(sourceFile))
+                    {
+                        // Remove 'generic_' from the file name
+                        string strippedFileName = fileName.Replace("Generic_", "");
+
+                        // Construct the destination file path
+                        string destinationFile = Path.Combine(destinationPath, strippedFileName);
+
+                        // Copy the file to the destination
+                        File.Copy(sourceFile, destinationFile, overwrite: true);
+
+                    }
+                    else
+                    {
+                        MessageBox.Show($"File '{fileName}' not found in the source directory.");
+                    }
+                }
+
+                CreateCardsButton_Click(this, new RoutedEventArgs());
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
+
+        }
+    
 
         private void CreateCardsButton_Click(object sender, RoutedEventArgs e)
         {
