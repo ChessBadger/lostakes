@@ -15,7 +15,7 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_0B3C98BD349948289E9FF3C1B003BCB4"
+        "MsmKey" = "8:_2BA0AAA79BD04C20BDC09A0B0F7EF933"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -43,6 +43,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -59,6 +67,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -90,9 +106,9 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0B3C98BD349948289E9FF3C1B003BCB4"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2BA0AAA79BD04C20BDC09A0B0F7EF933"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\Downloads\\losstakes_icon.ico"
+            "SourcePath" = "8:C:\\Program Files (x86)\\LC\\Losstakes\\lostakes_icon.ico"
             "TargetName" = "8:lostakes_icon.ico"
             "Tag" = "8:"
             "Folder" = "8:_43C52A1970414DB683AC0A40AED13D47"
@@ -309,7 +325,7 @@
             "Target" = "8:_4FA4F797BE544B0CA1025CC06B322FA9"
             "Folder" = "8:_D1D6B833EC3A4771AACDFD30C492F85C"
             "WorkingFolder" = "8:_43C52A1970414DB683AC0A40AED13D47"
-            "Icon" = "8:_0B3C98BD349948289E9FF3C1B003BCB4"
+            "Icon" = "8:_2BA0AAA79BD04C20BDC09A0B0F7EF933"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_842511BF8267484EB4E3E44C5C996D02"
@@ -323,7 +339,7 @@
             "Target" = "8:_4FA4F797BE544B0CA1025CC06B322FA9"
             "Folder" = "8:_86F707810A2F4545B1C8E99FC517C2B1"
             "WorkingFolder" = "8:_43C52A1970414DB683AC0A40AED13D47"
-            "Icon" = "8:_0B3C98BD349948289E9FF3C1B003BCB4"
+            "Icon" = "8:_2BA0AAA79BD04C20BDC09A0B0F7EF933"
             "Feature" = "8:"
             }
         }
@@ -727,7 +743,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_4FA4F797BE544B0CA1025CC06B322FA9"
             {
-            "SourcePath" = "8:..\\lostakes\\obj\\Release\\net8.0-windows\\apphost.exe"
+            "SourcePath" = "8:..\\lostakes\\obj\\Debug\\net8.0-windows\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_43C52A1970414DB683AC0A40AED13D47"
