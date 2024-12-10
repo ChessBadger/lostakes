@@ -59,47 +59,54 @@ namespace lostakes
 
         private void CategoriesCardsButton_Click(object sender, RoutedEventArgs e )
         {
-            string sourcePath = @"C:\Lostakes Data";
-            string destinationPath = @"C:\Wintakes\Data";
 
-            // Ensure the destination directory exists
-            Directory.CreateDirectory(destinationPath);
-
-            // Define the files to look for
-            string[] fileNames = { "Generic_area.dbf", "Generic_location.dbf" };
-
-            try
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to proceed with categories only?",
+                                                      "Confirmation",
+                                                      MessageBoxButton.YesNo,
+                                                      MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
             {
-                foreach (string fileName in fileNames)
+                string sourcePath = @"C:\Lostakes Data";
+                string destinationPath = @"C:\Wintakes\Data";
+
+                // Ensure the destination directory exists
+                Directory.CreateDirectory(destinationPath);
+
+                // Define the files to look for
+                string[] fileNames = { "Generic_area.dbf", "Generic_location.dbf" };
+
+                try
                 {
-                    string sourceFile = Path.Combine(sourcePath, fileName);
-
-                    if (File.Exists(sourceFile))
+                    foreach (string fileName in fileNames)
                     {
-                        // Remove 'generic_' from the file name
-                        string strippedFileName = fileName.Replace("Generic_", "");
+                        string sourceFile = Path.Combine(sourcePath, fileName);
 
-                        // Construct the destination file path
-                        string destinationFile = Path.Combine(destinationPath, strippedFileName);
+                        if (File.Exists(sourceFile))
+                        {
+                            // Remove 'generic_' from the file name
+                            string strippedFileName = fileName.Replace("Generic_", "");
 
-                        // Copy the file to the destination
-                        File.Copy(sourceFile, destinationFile, overwrite: true);
+                            // Construct the destination file path
+                            string destinationFile = Path.Combine(destinationPath, strippedFileName);
 
+                            // Copy the file to the destination
+                            File.Copy(sourceFile, destinationFile, overwrite: true);
+
+                        }
+                        else
+                        {
+                            MessageBox.Show($"File '{fileName}' not found in the source directory.");
+                        }
                     }
-                    else
-                    {
-                        MessageBox.Show($"File '{fileName}' not found in the source directory.");
-                    }
+
+                    CreateCardsButton_Click(this, new RoutedEventArgs());
+
                 }
-
-                CreateCardsButton_Click(this, new RoutedEventArgs());
-
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred: {ex.Message}");
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred: {ex.Message}");
-            }
-
         }
     
 
@@ -118,6 +125,8 @@ namespace lostakes
             string hhConfigDlfPath = @"C:\Lostakes Data\HHConfig.dlf";
             string hhConfigDataDlfPath = @"C:\Lostakes Data\HHConfigData.dlf";
 
+
+
             // Define paths to the output DLF files
             string areaOutputDlfPath = @"C:\Lostakes Data\area_output.dlf";
             string categoryOutputDlfPath = @"C:\Lostakes Data\category_output.dlf";
@@ -127,6 +136,61 @@ namespace lostakes
             // Paths of the files to copy as-is
             string lostakesDataPath = @"C:\Lostakes Data";
             string[] filesToCopy = { "auto.ini", "DC5.exe", "Scanners.ini", "Scard.don" };
+
+            // Define the path for the original and the new file
+            string hhConfigDataDlfPathNoLimits = Path.Combine(lostakesDataPath, "HHConfigDataNoLimits.dlf");
+            string replacementString = "000000000000000000000000019999999009999009999999999999999990";
+
+            try
+            {
+                // Check if the original file exists
+                if (File.Exists(hhConfigDataDlfPath))
+                {
+                    // Copy the file and rename it
+                    File.Copy(hhConfigDataDlfPath, hhConfigDataDlfPathNoLimits, overwrite: true);
+                }
+                else
+                {
+                    MessageBox.Show($"File not found: {hhConfigDataDlfPath}");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while creating HHConfigDataNoLimits.dlf: {ex.Message}");
+            }
+
+            try
+            {
+                // Check if the file exists
+                if (File.Exists(hhConfigDataDlfPathNoLimits))
+                {
+                    // Read the file content
+                    string fileContent = File.ReadAllText(hhConfigDataDlfPathNoLimits);
+
+                    // Replace the first 60 characters
+                    if (fileContent.Length >= 60)
+                    {
+                        fileContent = replacementString + fileContent.Substring(60);
+                    }
+                    else
+                    {
+                        fileContent = replacementString; // If the file has less than 60 characters, replace the entire content
+                    }
+
+                    // Write the updated content back to the file
+                    File.WriteAllText(hhConfigDataDlfPathNoLimits, fileContent);
+
+                }
+                else
+                {
+                    MessageBox.Show($"File not found: {hhConfigDataDlfPathNoLimits}");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while modifying HHConfigDataNoLimits.dlf: {ex.Message}");
+            }
+
 
             try
             {
@@ -207,6 +271,60 @@ namespace lostakes
                             GenerateOutputDlfFromItemast(itemastDbfPath, outputDataPath);
                         }
 
+                        try
+                        {
+                            // Ensure the folder selection was successful
+                            if (!string.IsNullOrEmpty(selectedFolder))
+                            {
+                                // Define the new folder name by appending " - no limits"
+                                string parentDirectory = Path.GetDirectoryName(selectedFolder);
+                                string folderName = Path.GetFileName(selectedFolder);
+                                string noLimitsFolderName = folderName + " - no limits";
+                                string noLimitsFolderPath = Path.Combine(parentDirectory, noLimitsFolderName);
+
+                                // Copy the directory to the new location
+                                if (Directory.Exists(selectedFolder))
+                                {
+                                    DirectoryCopy(selectedFolder, noLimitsFolderPath, true);
+                                }
+                                else
+                                {
+                                    MessageBox.Show($"Selected directory does not exist: {selectedFolder}");
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("No folder selected. Operation cancelled.");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"An error occurred while copying the directory: {ex.Message}");
+                        }
+
+                        try
+                        {
+                            // Define the path to the no limits directory
+                            string noLimitsFolderPath = Path.Combine(Path.GetDirectoryName(selectedFolder), Path.GetFileName(selectedFolder) + " - no limits");
+
+                            // Ensure the no limits directory exists
+                            if (Directory.Exists(noLimitsFolderPath))
+                            {
+                                // Combine and process HHConfig.dlf using HHConfigDataNoLimits.dlf
+                                CombineDlfFiles(hhConfigDlfPath, hhConfigDataDlfPathNoLimits, noLimitsFolderPath, "HHConfig");
+
+                            }
+                            else
+                            {
+                                MessageBox.Show($"No limits directory not found: {noLimitsFolderPath}");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"An error occurred while combining HHConfig.dlf for the no limits directory: {ex.Message}");
+                        }
+
+
                         // Notify the user that the process is complete
                         MessageBox.Show("Cards Created!");
                         // Clean up non-default files
@@ -228,6 +346,40 @@ namespace lostakes
 
             ClearBackup clearBackupPage = new ClearBackup();
             clearBackupPage.RunBackup();
+        }
+
+        // Helper method to copy all files and subdirectories
+        void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
+        {
+            // Get the directory information
+            DirectoryInfo dir = new DirectoryInfo(sourceDirName);
+
+            if (!dir.Exists)
+            {
+                throw new DirectoryNotFoundException($"Source directory does not exist or could not be found: {sourceDirName}");
+            }
+
+            // If the destination directory doesn't exist, create it
+            DirectoryInfo[] dirs = dir.GetDirectories();
+            Directory.CreateDirectory(destDirName);
+
+            // Copy all the files
+            FileInfo[] files = dir.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                string tempPath = Path.Combine(destDirName, file.Name);
+                file.CopyTo(tempPath, false);
+            }
+
+            // If copying subdirectories, copy them and their contents to new location
+            if (copySubDirs)
+            {
+                foreach (DirectoryInfo subdir in dirs)
+                {
+                    string tempPath = Path.Combine(destDirName, subdir.Name);
+                    DirectoryCopy(subdir.FullName, tempPath, copySubDirs);
+                }
+            }
         }
 
         private void DeleteNonDefaultFiles(string areaOutputDlfPath, string categoryOutputDlfPath, string locationOutputDlfPath)
