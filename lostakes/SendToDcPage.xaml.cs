@@ -204,6 +204,11 @@ namespace lostakes
 
                     // Process location.dbf to generate location_output.dlf
                     GenerateOutputDlfFromDbf(locationDbfPath, locationOutputDlfPath, 3, 26, "location");
+
+                    // After generating output DLF files
+                    TransformDlfToAsciiOnly(areaOutputDlfPath);
+                    TransformDlfToAsciiOnly(categoryOutputDlfPath);
+                    TransformDlfToAsciiOnly(locationOutputDlfPath);
                 }
               
 
@@ -250,7 +255,7 @@ namespace lostakes
                                 else
                                 {
                                     // Display which file wasn't found
-                                    MessageBox.Show($"File not found: {sourceFilePath}");
+                                    MessageBox.Show($"File not found: {sourceFilePath}\nSourcePath");
                                 }
                             }
                             catch (Exception fileCopyEx)
@@ -470,12 +475,49 @@ namespace lostakes
             }
         }
 
+        private void TransformDlfToAsciiOnly(string dlfFilePath)
+        {
+            try
+            {
+                if (File.Exists(dlfFilePath))
+                {
+                    // Read all lines with UTF-8 encoding
+                    string[] lines = File.ReadAllLines(dlfFilePath, System.Text.Encoding.UTF8);
+
+                    // Sanitize each line to remove non-ASCII characters
+                    for (int i = 0; i < lines.Length; i++)
+                    {
+                        lines[i] = RemoveNonAsciiCharacters(lines[i]);
+                    }
+
+                    // Write sanitized lines back to the file with UTF-8 encoding
+                    File.WriteAllLines(dlfFilePath, lines, System.Text.Encoding.UTF8);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while transforming {dlfFilePath} to ASCII-only: {ex.Message}");
+            }
+        }
+
+        // Helper method to remove or replace non-ASCII characters
+        private string RemoveNonAsciiCharacters(string input)
+        {
+            // Replace non-ASCII characters with a placeholder (e.g., '?') or remove them
+            return string.Concat(input.Select(c => c <= 127 ? c : '?'));
+        }
+
+
+
 
         // Combines the original .dlf file with the new output file and saves it to the selected folder
         private void CombineDlfFiles(string originalDlfPath, string outputDlfPath, string destinationFolder, string fileType)
         {
             // Path to save the combined file in the selected folder
             string combinedFilePath = Path.Combine(destinationFolder, $"{fileType.ToUpper()}.dlf");
+
+            // After combining DLF files
+            TransformDlfToAsciiOnly(combinedFilePath);
 
             using (var writer = new StreamWriter(combinedFilePath))
             {
